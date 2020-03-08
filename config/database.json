@@ -1,0 +1,6 @@
+{
+    "username":"root",
+    "password": "rootpassword",
+    "url": "mongodb+srv://<username>:<password>@bis-development-qer12.mongodb.net/bis?retryWrites=true&w=majority",
+    "host": "bis-development-qer12.mongodb.net"
+}

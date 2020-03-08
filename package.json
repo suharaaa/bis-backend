@@ -1,0 +1,28 @@
+{
+  "name": "bis-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start-server": "node index.js",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/suharaaa/bis-backend.git"
+  },
+  "author": "ITP_2020_Y2S201_G12",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/suharaaa/bis-backend/issues"
+  },
+  "homepage": "https://github.com/suharaaa/bis-backend#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.9.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
+}
