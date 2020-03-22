@@ -1,5 +1,5 @@
 const router = require('express').Router();
 
-// define routes here
+//define route
 
 module.exports = router;
