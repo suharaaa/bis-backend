@@ -1,6 +1,7 @@
 const router = require('express').Router();
 
 // define routes here
-// app.post('/student/add', taskController.addStudent);
+// app.post('dashboard/student/add', taskController.addStudent);
+// app.put('dashboard/student/update', taskController.updateStudent);
 
 module.exports = router;
