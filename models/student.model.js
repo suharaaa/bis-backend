@@ -23,9 +23,6 @@ const studentSchema = new mongoose.Schema({
     faddress: { type: String},
     fphone: { type: Number, required: true},
     femail: { type: String},
+},  { timestamps: true });
 
-    createdOn: { type: Date, default: new Date() },
-    updatedOn: { type: Date, default: new Date() }
-})
-
-module.exports = mongoose.model('student', studentSchema)
+module.exports = mongoose.model('student', studentSchema);
