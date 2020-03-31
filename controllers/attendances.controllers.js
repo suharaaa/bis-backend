@@ -1,1 +1,0 @@
-const student = require('../models/attendance.model')
