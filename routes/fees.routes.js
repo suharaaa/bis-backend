@@ -6,15 +6,10 @@ const feesController = require('../controllers/fees.controllers');
 
 
 router.post('/fees', feesContoller.createNewFee);
-app.get('/fees', feesContoller.findFees);
-app.get('/fees/:id', feesContoller.findFeeID);
-app.put('/fees/:id', feesContoller.UpdateFee);
-app.delete('/fees/:id', feesContoller.DeleteFee);
-
-
-
-
-
+router.get('/fees', feesContoller.findFees);
+router.get('/fees/:id', feesContoller.findFeeID);
+router.put('/fees/:id', feesContoller.UpdateFee);
+router.delete('/fees/:id', feesContoller.DeleteFee);
 
 
 
