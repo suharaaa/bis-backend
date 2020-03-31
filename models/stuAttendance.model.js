@@ -1,10 +1,12 @@
 const mongoose = require('mongoose');
 
 const stuAttendanceSchema = new mongoose.Schema({
-    id: String,
-    stuId: String,
+    Rid: String,
     date: {type : Date, default: new Date()},
-    status : {type: Number, default: 1}
+    class: String,
+    students: { stuId: String, 
+                stuName: String, 
+                status: {type: Number, default: 1}}
 })
 
 module.exports = mongoose.model('stuAttendance', stuAttendanceSchema);
