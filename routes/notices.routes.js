@@ -9,6 +9,4 @@ router.put('/notices/:id', noticeController.updateNoticeById);
 router.put('/notices/:id/noofviewers', noticeController.updateNoticeViewersById);
 router.delete('/notices/:id', noticeController.deleteNoticeById);
 
-
-
 module.exports = router;
