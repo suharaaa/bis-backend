@@ -6,7 +6,8 @@ const stuAttendanceSchema = new mongoose.Schema({
     class: String,
     students: { stuId: String, 
                 stuName: String, 
-                status: {type: Number, default: 1}}
+                status: {type: Number, default: 1}},
+    presentedStudentsCount: Number
 })
 
 module.exports = mongoose.model('stuAttendance', stuAttendanceSchema);
