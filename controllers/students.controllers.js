@@ -132,9 +132,46 @@ const deleteStudentById = (req, res) => {
     });
 };
 
+const getNextAdmissionNumber = (req, res) => {
+    
+    const start = new Date();
+    start.setMonth(0, 1);
+    start.setHours(0, 0, 0, 0);
+
+    const end = new Date();
+    end.setMonth(11, 31);
+    end.setHours(23, 59, 59, 999);
+
+    Student.aggregate([
+        {
+            $match: {
+                createdAt: { $gt: start, $lt: end }
+            }
+        }, {
+            $group: {
+                _id: null,
+                count: {
+                    $sum: 1
+                }
+            }
+        }
+    ]).then(result => {
+        const formattedCount = "000".concat(result[0].count).slice(-4);
+        return res.status(200).json({
+            success: true,
+            data: `S${start.getFullYear().toString().slice(-2)}${formattedCount}`
+        });
+    }).catch(err => res.status(500).json({
+        success: false,
+        message: err.message
+    }));
+
+}
+
 module.exports = {
     enrollStudent,
     viewStudents,
     updateStudent,
-    deleteStudentById
+    deleteStudentById,
+    getNextAdmissionNumber
 };
