@@ -6,6 +6,7 @@ const resultsRouter = require('./results.routes');
 const studentsRouter = require('./students.routes');
 const teachersRouter = require('./teachers.routes');
 const usersRouter = require('./users.routes');
+const subjectsRouter = require('./subjects.routes');
 
 const init = app => {
 
@@ -17,6 +18,7 @@ const init = app => {
     app.use(studentsRouter);
     app.use(teachersRouter);
     app.use(usersRouter);
+    app.use(subjectsRouter);
 
 };
 
