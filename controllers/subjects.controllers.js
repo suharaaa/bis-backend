@@ -1,4 +1,4 @@
-const Subjects = require('../models/subjects.model');
+const Subject = require('../models/subject.model');
 
 const createNewSubject= (req, res) => {
 
@@ -13,7 +13,7 @@ const createNewSubject= (req, res) => {
     }
 
 
-    const subject = new Subjects(req.body);
+    const subject = new Subject(req.body);
 
 
      //save fees to database
@@ -72,7 +72,7 @@ const findSubjects = (req, res) =>{
 //find sub by id
 const findSubjectID = (req, res) =>{
 
-    Subjects.findById(req.params.id).then(result => 
+    Subject.findById(req.params.id).then(result => 
         {
             res.status(200).json({
 
@@ -114,7 +114,7 @@ const UpdateSubject = (req, res) => {
     }
 
 
-    Subjects.findByIdAndUpdate(req.params.id, {
+    Subject.findByIdAndUpdate(req.params.id, {
 
 
         subjectname : req.body.subjectname,
@@ -159,7 +159,7 @@ const DeleteSubject = (req, res) => {
     }
 
 
-    Subjects.findByIdAndDelete(req.params.id).then(result => 
+    Subject.findByIdAndDelete(req.params.id).then(result => 
         {
             res.status(200).json({
 
