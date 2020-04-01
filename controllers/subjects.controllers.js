@@ -118,7 +118,7 @@ const UpdateSubject = (req, res) => {
 
 
         subjectname : req.body.subjectname,
-        class : req.body.class,
+        classname : req.body.classname,
         teachername : req.body.teachername
         
         
