@@ -2,13 +2,14 @@ const mongoose = require('mongoose');
 
 const stdAttendanceSchema = new mongoose.Schema({
     date : { type: Date, default: new Date()},
-    class: { type: Schema.Types.ObjectId, ref: 'Class'},
+    class: { type: Schema.Types.ObjectId, ref: 'class'},
     records: [
         {
-            student: { type: Schema.Types.ObjectId, ref: 'Student'},
+            student: { type: Schema.Types.ObjectId, ref: 'student'},
             isPresent: { type: Boolean, default: false }
         }
-    ]
-}, { timestamps: true });
+    ],
+    count: {type:Number}
+},{ timestamps: true });
 
 module.exports = mongoose.model('stdAattendance', stdAttendanceSchema);
