@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { Schema } = mongoose;
 
 const tchAttendanceSchema = new mongoose.Schema({
     date : { type: Date, default: new Date()},

@@ -8,11 +8,7 @@ const classSchema = new Schema({
     students: [
         { type: Schema.Types.ObjectId, ref: 'Student'}
     ]
-
     
-
-    
-
 }, { timestamps: true});
 
-module.exports = mongoose.model('classes', classSchema);
+module.exports = mongoose.model('Classes', classSchema);
