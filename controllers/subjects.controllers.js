@@ -14,28 +14,22 @@ const createNewSubject= (req, res) => {
 
 
     const subject = new Subject(req.body);
+    subject.assignIn = mongoose.Types.ObjectId(req.body.assignId);
 
 
      //save fees to database
-     subject.save().then(result=> {
+     subject.save()
+     .then(s => {
+         Class.findByIdAndUpdate(req.body.assignIn, {
+             $push: {
+                 subjects: mongoose.Types.ObjectId(s._id)
+             }
+         }).then(c => res.status(200).json({ data: s }))
+             .catch(err => res.status(500).json({ error: err.message }));
+     })
+     .catch(err => res.status(500).json({ error: err.message }));
 
-        res.status(200).json({
-
-            success:true,
-            data : result
-        });
-    }).catch(err => {
-            
-        res.status(500).json({
-            success : false,
-            message : err.message
-
-        });      
-
-    });
-
-
-};
+}
 
 
 
@@ -44,7 +38,7 @@ const createNewSubject= (req, res) => {
 
 const findSubjects = (req, res) =>{
 
-    Subjects.find({}).then(result => 
+    Subject.find({}).populate('assignIn').then(result => 
         {
             res.status(200).json({
 
@@ -72,7 +66,7 @@ const findSubjects = (req, res) =>{
 //find sub by id
 const findSubjectID = (req, res) =>{
 
-    Subject.findById(req.params.id).then(result => 
+    Subject.findById(req.params.id).populate('assignIn').then(result => 
         {
             res.status(200).json({
 
@@ -115,34 +109,28 @@ const UpdateSubject = (req, res) => {
 
 
     Subject.findByIdAndUpdate(req.params.id, {
+        subjectname: req.body.subjectname,
+        assignIn: mongoose.Types.ObjectId(req.body.assignIn),
+    }, { new: true }).then(s => {
 
+        Class.findOneAndUpdate({ subjects: mongoose.Types.ObjectId(req.params.id) }, {
+            $pullAll: {
+                subjects: [mongoose.Types.ObjectId(req.params.id)]
+            }
+        }).then(r => {
 
-        subjectname : req.body.subjectname,
-        classname : req.body.classname,
-        teachername : req.body.teachername
-        
-        
+            Class.findByIdAndUpdate(req.body.assignIn, {
+                $push: {
+                    subjects: mongoose.Types.ObjectId(s._id)
+                }
+            }).then(c => res.status(200).json({ data: s }))
+                .catch(err => res.status(500).json({ error: err.message }));
 
+        }).catch(err => res.status(500).json({ error: err.message }));
 
-    }, {new: true}).then(result => 
-        {
-            res.status(200).json({
-
-                success : true,
-                data : result
-
-        });
-    }).catch(err => {
-            
-        res.status(500).json({
-            success : false,
-            message : err.message
-
-        });    
-   
-    });
-};
-
+    }).catch(err => res.status(500).json({ error: err.message }));
+    
+}
 
 //delete sub
 const DeleteSubject = (req, res) => {

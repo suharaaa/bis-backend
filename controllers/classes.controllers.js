@@ -44,7 +44,7 @@ const createNewClass= (req, res) => {
 
 const findClass = (req, res) =>{
 
-    Class.find({}).populate('students').then(result => 
+    Class.find({}).populate('students').populate('subjects').then(result => 
         {
             res.status(200).json({
 
@@ -202,6 +202,25 @@ const UpdateStudent = (req, res) => {
 }
 
 
+//update subject details
+
+const UpdateSub = (req, res) => {
+
+
+    Class.findByIdAndUpdate(req.params.id, {
+        $push: {
+        subjects: mongoose.Types.ObjectId(req.body.subjects)
+        }
+    }, { new: true }).then(c => {
+
+        Subject.findByIdAndUpdate(req.body.subject, {
+            assignIn: mongoose.Types.ObjectId(c._id)
+        }, { new: true }).then(data => res.status(200).json({ data }))
+            .catch(err => res.status(500).json({ error: err.message }));
+
+    }).catch(err => res.status(500).json({ error: err.message }));
+
+}
 
 
 
@@ -213,7 +232,8 @@ findClass,
 findClassID,
 UpdateClass,
 DeleteClass,
-UpdateStudent
+UpdateStudent,
+UpdateSub
 
 
 
