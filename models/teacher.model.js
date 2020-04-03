@@ -16,8 +16,8 @@ const teacherSchema = new mongoose.Schema({
     nationality: { type: String, required: true},
     qul: { type: String, required: true},
 
-    class:{type: Schema.Types.ObjectId, ref:'classes'},
+    // class:{type: Schema.Types.ObjectId, ref:'classes'},
 
 },  { timestamps: true });
 
-module.exports = mongoose.model('teachers', teacherSchema);
+module.exports = mongoose.model('Teacher', teacherSchema);
