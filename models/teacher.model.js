@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
+const { Schema } = mongoose;
 
 const teacherSchema = new mongoose.Schema({
+
     fname: { type: String, required: true},
     lname: { type: String, required: true},
     address: { type: String, required: true},
@@ -14,6 +16,8 @@ const teacherSchema = new mongoose.Schema({
     mail: { type: String, required: true},
     nationality: { type: String, required: true},
     qul: { type: String, required: true},
+
+    class:{type: Schema.Types.ObjectId, ref:'Classes'},
 
 },  { timestamps: true });
 

@@ -1,4 +1,4 @@
-const Teachers = require('../models/teachers.model')
+const Teacher = require('../models/teacher.model')
 
 const addTeacher = (req, res) => {
     if (!req.body.fname) {
@@ -18,7 +18,7 @@ const addTeacher = (req, res) => {
     
     
     //creating teacher
-    const teachers = new Teachers(req.body);
+    const teachers = new Teacher(req.body);
 
     //save to the database
     teachers.save().then(result => {
