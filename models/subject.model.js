@@ -3,12 +3,9 @@ const { Schema } = mongoose;
 const subjectsSchema = new Schema({
 
     subjectname : { type : String, required: true},
-    classname : { type: Schema.Types.ObjectId, ref: 'Class' },
-    teachername :{ type: Schema.Types.ObjectId, ref: 'Teacher'},
-    assignIn: {
-        type: Schema.Types.ObjectId,
-        ref: 'Class'
-    }
+    classname : { type: Schema.Types.ObjectId, ref: 'Class'},
+    teachername :{ type: Schema.Types.ObjectId, ref: 'Teacher'}
+ 
 
 },{ timestamps: true });
 
