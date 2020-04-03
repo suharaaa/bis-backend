@@ -21,41 +21,74 @@ const enrollStudent = (req, res) => {
             message: "Address is undefined"
         });
     }
-    
+
     //create student
     const student = new Student(req.body);
+    student.class = mongoose.Types.ObjectId(req.body.class);
 
     //save to db
-    student.save().then(result => {
-        res.status(200).json({
-            success: true,
-            data: result
+    student.save()
+        .then(s => {
+            Classes.findByIdAndUpdate(req.body.class, {
+                $push: {
+                    students: mongoose.Types.ObjectId(s._id)
+                }
+            }).then(result => {
+                res.status(200).json({
+                    success: true,
+                    data: result
+                });
+            }).catch(err => {
+                res.status(500).json({
+                    success: false,
+                    message: err.message
+                });
+            });
+        }).catch(err => {
+            res.status(500).json({
+                success: false,
+                message: err.message
+            });
         });
-    }).catch(err => {
-        res.status(500).json({
-            success: false,
-            message: err.message
-        });
-    });
-}
+};
 
 //get all students
 const viewStudents = (req, res) => {
 
-    Student.find({}).then(result => {
+    Student.find({})
+        .populate('class')
+        .then(result => {
 
-        res.status(200).json({
-            success: true,
-            data: result
+            res.status(200).json({
+                success: true,
+                data: result
+            });
+
+        }).catch(err => {
+            res.status(500).json({
+                success: false,
+                message: err.message
+            });
         });
 
-    }).catch(err => {
-        res.status(500).json({
-            success: false,
-            message: err.message
-        });
-    });
+};
 
+//get students by id
+const viewStudentId = (req, res) => {
+    Student.findById(req.params.id)
+        .populate('class')
+        .then(result => {
+            res.status(200).json({
+                success: true,
+                data: result
+            });
+
+        }).catch(err => {
+            res.status(500).json({
+                success: false,
+                message: err.message
+            });
+        });
 };
 
 //update student details
@@ -91,21 +124,48 @@ const updateStudent = (req, res) => {
         nation: req.body.nation,
         religion: req.body.religion,
         mail: req.body.mail,
+        class: mongoose.Types.ObjectId(req.body.class),
         mname: req.body.mname,
         moccupation: req.body.moccupation,
         mworkp: req.body.mworkp,
+        maddress: req.body.maddress,
         mphone: req.body.mphone,
         memail: req.body.memail,
         fname: req.body.fname,
         foccupation: req.body.foccupation,
         fworkp: req.body.fworkp,
+        faddress: req.body.maddress,
         fphone: req.body.fphone,
         femail: req.body.femail
-    
-    }).then(result => {
-        res.status(200).json({
-            success: true,
-            data: result
+
+    }, { new: true }).then(s => {
+        Classes.findOneAndUpdate({
+            students: mongoose.Types.ObjectId(req.params.id)
+        }, {
+            $pullAll: {
+                students: [mongoose.Types.ObjectId(req.params.id)]
+            }
+        }).then(r => {
+            Classes.findByIdAndUpdate(req.body.class, {
+                $push: {
+                    students: mongoose.Types.ObjectId(s._id)
+                }
+            }).then(result => {
+                res.status(200).json({
+                    success: true,
+                    data: result
+                });
+            }).catch(err => {
+                res.status(500).json({
+                    success: false,
+                    message: err.message
+                });
+            });
+        }).catch(err => {
+            res.status(500).json({
+                success: false,
+                message: err.message
+            });
         });
     }).catch(err => {
         res.status(500).json({
@@ -113,7 +173,6 @@ const updateStudent = (req, res) => {
             message: err.message
         });
     });
-
 };
 
 //unenroll a student from the system
@@ -133,7 +192,7 @@ const deleteStudentById = (req, res) => {
 };
 
 const getNextAdmissionNumber = (req, res) => {
-    
+
     const start = new Date();
     start.setMonth(0, 1);
     start.setHours(0, 0, 0, 0);
@@ -171,6 +230,7 @@ const getNextAdmissionNumber = (req, res) => {
 module.exports = {
     enrollStudent,
     viewStudents,
+    viewStudentId,
     updateStudent,
     deleteStudentById,
     getNextAdmissionNumber

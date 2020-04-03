@@ -7,7 +7,7 @@ const classSchema = new Schema({
     classteacher : { type: Schema.Types.ObjectId, ref: 'Teacher'},
 
     students: [
-        { type: Schema.Types.ObjectId, ref: 'Student'}
+        { type: Schema.Types.ObjectId, ref: 'student'}
     ]
     
 }, { timestamps: true});
