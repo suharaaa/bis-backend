@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-const stdAttendanceSchema = new mongoose.Schema({
+const stdAttendanceSchema = new Schema ({
+    
     date : { type: Date, default: new Date()},
     class: { type: Schema.Types.ObjectId, ref: 'Classes'},
     records: [

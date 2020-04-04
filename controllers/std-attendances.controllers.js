@@ -1,4 +1,6 @@
 const StdAttendance = require('../models/std-attendance.model');
+const mongoose = require('mongoose');
+const { Schema } = mongoose;
 
 const createStdAttendance = (req, res) => {
 
@@ -24,6 +26,22 @@ const createStdAttendance = (req, res) => {
             message: err.message
         });
     });
+};
+
+const viewAllStdAttendance = (req, res) => {
+    StdAttendance.find()
+        .populate('class')
+        .populate('records.student').then(result => {
+            res.status(200).json({
+                success: true,
+                data : result
+            });
+        }).catch(err => {
+            res.status(500).json({
+                success: false,
+                message: err.message
+            });
+        });
 };
 
 const viewStdAttendance = (req, res) => {
@@ -77,6 +95,7 @@ const deleteStdAttendance = (req, res) => {
 
 module.exports = {
     createStdAttendance,
+    viewAllStdAttendance,
     viewStdAttendance,
     updateStdAttendance,
     deleteStdAttendance
