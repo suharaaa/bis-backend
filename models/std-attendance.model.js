@@ -1,15 +1,16 @@
 const mongoose = require('mongoose');
+const { Schema } = mongoose;
 
 const stdAttendanceSchema = new mongoose.Schema({
-    "classId": {type: String },
-    "date": {type: Date, default : new Date()},
-    "count": {type: Number},
-    "records": [{
-        "sId": {type: String},
-        "sName": {type: String},
-        "status": {type: Number, default : 0}
-    }],
-    "updatedOn": {type: Date, default : new Date()}
-});
+    date : { type: Date, default: new Date()},
+    class: { type: Schema.Types.ObjectId, ref: 'Classes'},
+    records: [
+        {
+            student: { type: Schema.Types.ObjectId, ref: 'student'},
+            isPresent: { type: Boolean, default: false }
+        }
+    ],
+    count: {type:Number}
+},{ timestamps: true });
 
-module.exports = mongoose.model('stdattendance', stdAttendanceSchema);
+module.exports = mongoose.model('stdAattendance', stdAttendanceSchema);

@@ -1,14 +1,15 @@
 const mongoose = require('mongoose');
+const { Schema } = mongoose;
 
 const tchAttendanceSchema = new mongoose.Schema({
-    "date": {type: Date, default : new Date()},
-    "count": {type: Number},
-    "records": [{ 
-        "tchId": {type: String},
-        "tchName": {type: String},
-        "status": {type: Number, default: 0}
-    }],
-    "updatedOn": {type: Date, default : new Date()}  
-});
+    date : { type: Date, default: new Date()},
+    records: [
+        { 
+           teacher: { type: Schema.Types.ObjectId, ref: 'teachers'},
+           isPresent: {type: Boolean, default:false} 
+        }
+    ],
+    count: {type: Number}
+},{ timestamps: true });
 
-module.exports = mongoose.model('tchattendance', tchAttendanceSchema);
+module.exports = mongoose.model('tchAttendance', tchAttendanceSchema);

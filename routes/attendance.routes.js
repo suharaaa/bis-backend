@@ -3,17 +3,15 @@ const stdAttendanceController = require('../controllers/std-attendances.controll
 const tchAttendanceController = require('../controllers/tch-attendances.controllers');
 
 // define routes here
+router.post('/classes/:id/attendance', stdAttendanceController.createStdAttendance);
+router.get('/classes/:id/attendance', stdAttendanceController.viewStdAttendance);
+router.put('/attendance/:id', stdAttendanceController.updateStdAttendance);
+router.delete('/attendance/:id', stdAttendanceController.deleteStdAttendance);
 
-router.post('/attendance/students/mark', stdAttendanceController.addStdAttendance);
-router.post('/attendance/teachers/mark', tchAttendanceController.addTchAttendance);
-router.get('/attendance/students', stdAttendanceController.viewStdAttendances);
-router.get('/attendance/teachers', tchAttendanceController.viewTchAttendances);
-router.get('/attendance/students/:id', stdAttendanceController.viewStdAttendanceById);
-router.get('/attendance/teachers/:id', tchAttendanceController.viewTchAttendanceById);
-router.put('/attendance/students/:id', stdAttendanceController.updateStdAttendanceById);
-router.put('/attendance/teachers/:id', tchAttendanceController.updateTchAttendanceById);
-router.delete('/attendance/students/:id', stdAttendanceController.deleteStdAttendanceById);
-router.delete('/attendance/teachers/:id', tchAttendanceController.deleteTchAttendanceById);
+router.post('/attendance', tchAttendanceController.createTchAttendance);
+router.get('/attendance', tchAttendanceController.viewTchAttendance);
+router.put('/attendance/:id', tchAttendanceController.updateTchAttendance);
+router.delete('/attendance/:id', tchAttendanceController.deleteTchAttendance);
 
 
 module.exports = router;

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { Schema } = mongoose;
 
 const teacherSchema = new mongoose.Schema({
 
@@ -16,7 +17,7 @@ const teacherSchema = new mongoose.Schema({
     nationality: { type: String, required: true},
     qul: { type: String, required: true},
 
-    // class:{type: Schema.Types.ObjectId, ref:'classes'},
+    
 
 },  { timestamps: true });
 

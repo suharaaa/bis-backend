@@ -2,7 +2,7 @@ const Class = require('../models/class.model');
 
 const createNewClass= (req, res) => {
 
-    if(!req.body.classname){  //body has the tasks content, if name isnt defined in body, it gives an error
+    if(!req.body.name){  //body has the tasks content, if name isnt defined in body, it gives an error
 
         return res.status(400).json({
 
@@ -44,7 +44,7 @@ const createNewClass= (req, res) => {
 
 const findClass = (req, res) =>{
 
-    Class.find({}).then(result => 
+    Class.find({}).populate('students').then(result => 
         {
             res.status(200).json({
 
@@ -102,7 +102,7 @@ const findClassID = (req, res) =>{
 //update sub
 const UpdateClass = (req, res) => {
 
-    if( !req.body.classname){  //body has the tasks content, if name isnt defined in body, it gives an error
+    if( !req.body.name){  //body has the tasks content, if name isnt defined in body, it gives an error
 
         return res.status(400).json({
 
@@ -118,8 +118,8 @@ const UpdateClass = (req, res) => {
 
 
         
-        classname : req.body.classname,
-       classteachername : req.body.classteachername
+        name : req.body.name,
+       classteacher : req.body.classteacher
         
         
 
@@ -147,7 +147,7 @@ const UpdateClass = (req, res) => {
 //delete sub
 const DeleteClass = (req, res) => {
 
-    if( !req.body.classname){  //body has the tasks content, if name isnt defined in body, it gives an error
+    if( !req.body.name){  //body has the tasks content, if name isnt defined in body, it gives an error
 
         return res.status(400).json({
 
@@ -204,6 +204,8 @@ const UpdateStudent = (req, res) => {
 
 
 
+
+
 module.exports = {
 
 createNewClass,
@@ -212,6 +214,7 @@ findClassID,
 UpdateClass,
 DeleteClass,
 UpdateStudent
+
 
 
 }
