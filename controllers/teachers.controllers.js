@@ -34,10 +34,10 @@ const addTeacher = (req, res) => {
     });
 }
 
-//finding
-const findTeacher = (req, res) =>{
 
-    Fees.find({}).then(result => 
+const viewTeacher = (req, res) =>{
+
+    Teacher.find({}).then(result => 
         {
             res.status(200).json({
 
@@ -50,6 +50,7 @@ const findTeacher = (req, res) =>{
     }).catch(err => {
             
         res.status(500).json({
+
             success : false,
             message : err.message
 
@@ -62,7 +63,7 @@ const findTeacher = (req, res) =>{
 
 const findTeacherByID = (req, res) =>{
 
-    Fees.findById(req.params.id).then(result => 
+    Teacher.findById(req.params.id).then(result => 
         {
             res.status(200).json({
 
@@ -174,7 +175,7 @@ const DeleteTeacher = (req, res) => {
 
 module.exports = {
     addTeacher,
-    findTeacher,
+    viewTeacher,
     findTeacherByID,
     updateTeacher,
     DeleteTeacher

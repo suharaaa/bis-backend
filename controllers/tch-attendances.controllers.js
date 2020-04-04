@@ -1,13 +1,14 @@
 const TchAttendance = require('../models/tch-attendance.model');
+const mongoose = require('mongoose');
+const { Schema } = mongoose;
 
 const createTchAttendance = (req, res) => {
 
-    const tchAttendance = new TchAttendance({
-       date: req.body.date
-    });
+    const tchAttendance = new TchAttendance();
 
     const records = req.body.records.map(r => {
-        r.student = mongoose.Types.ObjectId(r.teacher);
+        r.teacher = mongoose.Types.ObjectId(r.teacher);
+        return r;
     });
 
     tchAttendance.records = records;
@@ -35,6 +36,21 @@ const viewTchAttendance = (req, res) => {
             res.status(500).json({
                 success: false,
                 message: err.message
+        });
+    });
+};
+
+const viewTchAttendanceById = (req, res) => {
+    TchAttendance.find(req.params.id)
+    .populate('records.teacher').then(result => {
+        res.status(200).json({
+            success: true,
+            data: result
+        });
+    }).catch(err => {
+        res.status(500).json({
+            success: false,
+            message: err.message
         });
     });
 };
@@ -75,6 +91,7 @@ const deleteTchAttendance = (req, res) => {
 module.exports = {
     createTchAttendance,
     viewTchAttendance,
+    viewTchAttendanceById,
     updateTchAttendance,
     deleteTchAttendance
 }
