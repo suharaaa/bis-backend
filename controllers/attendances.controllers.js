@@ -1,19 +1,19 @@
-const TchAttendance = require('../models/tch-attendance.model');
+const Attendance = require('../models/attendance.model');
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-const createTchAttendance = (req, res) => {
+const createAttendance = (req, res) => {
 
-    const tchAttendance = new TchAttendance();
+    const attendance = new Attendance();
 
     const records = req.body.records.map(r => {
-        r.teacher = mongoose.Types.ObjectId(r.teacher);
+        r.teacher = Schema.Types.ObjectId(r.teacher);
         return r;
     });
 
-    tchAttendance.records = records;
+    attendance.records = records;
 
-    tchAttendance.save().then(result => {
+    Attendance.save().then(result => {
         res.status(200).json({
             success: true,
             data: result
@@ -26,8 +26,8 @@ const createTchAttendance = (req, res) => {
     });
 };
 
-const viewTchAttendance = (req, res) => {
-    TchAttendance.find({}).populate('records.teacher').then(result => {
+const viewAttendance = (req, res) => {
+    Attendance.find({}).populate('records.teacher').then(result => {
             res.status(200).json({
                 success:true,
                 data: result
@@ -40,8 +40,8 @@ const viewTchAttendance = (req, res) => {
     });
 };
 
-const viewTchAttendanceById = (req, res) => {
-    TchAttendance.find(req.params.id)
+const viewAttendanceById = (req, res) => {
+    Attendance.find(req.params.id)
     .populate('records.teacher').then(result => {
         res.status(200).json({
             success: true,
@@ -55,13 +55,13 @@ const viewTchAttendanceById = (req, res) => {
     });
 };
 
-const updateTchAttendance = (req, res) => {
+const updateAttendance = (req, res) => {
     const records = req.body.records.map(r => {
-        r.teacher = mongoose.Types.ObjectId(r.teacher);
+        r.teacher = Schema.Types.ObjectId(r.teacher);
         return r;
     });
 
-    TchAttendance.findByIdAndUpdate(req.params.id, { records },{ new:true }).then(result => {
+    Attendance.findByIdAndUpdate(req.params.id, { records },{ new:true }).then(result => {
         res.status(200).json({
             success:true,
             data: result
@@ -74,8 +74,8 @@ const updateTchAttendance = (req, res) => {
     });
 }
 
-const deleteTchAttendance = (req, res) => {
-    TchAttendance.findByIdAndDelete(req.params.id).then(result => {
+const deleteAttendance = (req, res) => {
+    Attendance.findByIdAndDelete(req.params.id).then(result => {
         res.status(200).json({
             success: true,
             data: result
@@ -89,9 +89,9 @@ const deleteTchAttendance = (req, res) => {
 };
 
 module.exports = {
-    createTchAttendance,
-    viewTchAttendance,
-    viewTchAttendanceById,
-    updateTchAttendance,
-    deleteTchAttendance
+    createAttendance,
+    viewAttendance,
+    viewAttendanceById,
+    updateAttendance,
+    deleteAttendance
 }

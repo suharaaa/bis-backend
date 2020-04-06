@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-const tchAttendanceSchema = new Schema({
+const attendanceSchema = new Schema({
 
     records: [
         { 
@@ -12,4 +12,4 @@ const tchAttendanceSchema = new Schema({
     count: {type: Number}
 },{ timestamps: true });
 
-module.exports = mongoose.model('tchAttendance', tchAttendanceSchema);
+module.exports = mongoose.model('Attendance', attendanceSchema);

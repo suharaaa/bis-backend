@@ -1,4 +1,4 @@
-const attendanceRouter = require('./attendance.routes');
+const attendancesRouter = require('./attendances.routes');
 const classesRouter = require('./classes.routes');
 const feesRouter = require('./fees.routes');
 const noticesRouter = require('./notices.routes');
@@ -10,7 +10,7 @@ const subjectsRouter = require('./subjects.routes');
 
 const init = app => {
 
-    app.use(attendanceRouter);
+    app.use(attendancesRouter);
     app.use(classesRouter);
     app.use(feesRouter);
     app.use(noticesRouter);
