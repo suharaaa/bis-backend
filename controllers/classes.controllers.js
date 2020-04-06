@@ -44,7 +44,7 @@ const createNewClass= (req, res) => {
 
 const findClass = (req, res) =>{
 
-    Class.find({}).populate('students').populate('subjects').then(result => 
+    Class.find({}).then(result => 
         {
             res.status(200).json({
 
@@ -72,7 +72,7 @@ const findClass = (req, res) =>{
 //find sub by id
 const findClassID = (req, res) =>{
 
-    Class.findById(req.params.id).populate('students').then(result => 
+    Class.findById(req.params.id).then(result => 
         {
             res.status(200).json({
 

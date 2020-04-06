@@ -119,8 +119,9 @@ const UpdateSubject = (req, res) => {
 
         
         subjectname : req.body.subjectname,
-       teachername : req.body.teachername,
-        classname: req.body.classname
+        classname: req.body.classname,
+       teachername : req.body.teachername
+      
         
 
 
@@ -147,7 +148,7 @@ const UpdateSubject = (req, res) => {
 //delete sub
 const DeleteSubject = (req, res) => {
 
-    if( !req.body.subjectname){  //body has the tasks content, if name isnt defined in body, it gives an error
+   /* if( !req.body.subjectname){  //body has the tasks content, if name isnt defined in body, it gives an error
 
         return res.status(400).json({
 
@@ -156,7 +157,7 @@ const DeleteSubject = (req, res) => {
 
         });  //this checks client sde errors
 
-    }
+    }*/
 
 
     Subject.findByIdAndDelete(req.params.id).then(result => 
