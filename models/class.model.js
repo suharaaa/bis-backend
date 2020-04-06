@@ -4,7 +4,7 @@ const { Schema } = mongoose;
 const classSchema = new Schema({
 
     name : { type: String, required: true },
-    classteacher : { type: Schema.Types.ObjectId, ref: 'Teacher'},
+    classteacher : { type: Schema.Types.ObjectId, ref: 'teachers'},
 
     students: [
         { type: Schema.Types.ObjectId, ref: 'student'}

@@ -60,6 +60,7 @@ const viewNoticeById = (req, res) => {
 };
 
 const updateNoticeById = (req, res) => {
+
     if(!req.body.title) {
         return res.status(400).json({
             success: false,
@@ -73,7 +74,7 @@ const updateNoticeById = (req, res) => {
             message: "Message is undefined"
         });
     }
-
+    
     Notice.findByIdAndUpdate(req.params.id,{
         title: req.body.title,
         content: req.body.content,

@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
-const { Schema } = mongoose;
+
 
 const teacherSchema = new mongoose.Schema({
+
+    tid: { type:String, required: true, unique: true },
 
     fname: { type: String, required: true},
     lname: { type: String, required: true},
@@ -17,7 +19,7 @@ const teacherSchema = new mongoose.Schema({
     nationality: { type: String, required: true},
     qul: { type: String, required: true},
 
-    class:{type: Schema.Types.ObjectId, ref:'Classes'},
+    
 
 },  { timestamps: true });
 
