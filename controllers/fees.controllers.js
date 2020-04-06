@@ -150,7 +150,7 @@ const UpdateFee = (req, res) => {
 //delete fee
 const DeleteFee = (req, res) => {
 
-    if( !req.body.grade){  //body has the tasks content, if name isnt defined in body, it gives an error
+ /*   if( !req.body.grade){  //body has the tasks content, if name isnt defined in body, it gives an error
 
         return res.status(400).json({
 
@@ -159,7 +159,7 @@ const DeleteFee = (req, res) => {
 
         });  //this checks client sde errors
 
-    }
+    }*/
 
 
     Fees.findByIdAndDelete(req.params.id).then(result => 
@@ -183,6 +183,7 @@ const DeleteFee = (req, res) => {
 
 
 };
+
 
 
 module.exports = {
