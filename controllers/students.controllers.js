@@ -1,4 +1,6 @@
-const Student = require('../models/student.model')
+const Student = require('../models/student.model');
+const mongoose = require('mongoose');
+const Classes = require('../models/class.model');
 
 const enrollStudent = (req, res) => {
     if (!req.body.fname) {

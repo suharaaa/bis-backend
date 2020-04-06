@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-const studentSchema = new mongoose.Schema({
+const studentSchema = new Schema({
 
     admissionNumber: { type: String, required: true, unique: true },
 
