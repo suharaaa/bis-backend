@@ -5,8 +5,7 @@ const attendanceSchema = new Schema({
 
     records: [
         { 
-           teacher: { type: Schema.Types.ObjectId, ref: 'teachers'},
-           isPresent: { type: Boolean, default:false } 
+           teacher: { type: Schema.Types.ObjectId, ref: 'teachers'}
         }
     ],
     count: {type: Number}
