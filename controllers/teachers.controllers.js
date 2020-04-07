@@ -32,7 +32,7 @@ const addTeacher = (req, res) => {
             message: err.message
         });
     });
-}
+};
 
 //getting teacher list
 const viewTeacher = (req, res) =>{
@@ -188,7 +188,7 @@ const getNextTid = (req, res) => {
         const formattedCount = "000".concat(result[0].count).slice(-4);
         return res.status(200).json({
             success: true,
-            data: `S${start.getFullYear().toString().slice(-2)}${formattedCount}`
+            data: `T${start.getFullYear().toString().slice(-2)}${formattedCount}`
         });
     }).catch(err => res.status(500).json({
         success: false,
