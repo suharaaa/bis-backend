@@ -61,31 +61,31 @@ const viewTeacher = (req, res) =>{
 };
 
 //finding
-const findTeacherByID = (req, res) =>{
+// const findTeacherByID = (req, res) =>{
 
-    Teacher.findById(req.params.id).then(result => 
-        {
-            res.status(200).json({
+//     Teacher.findById(req.params.id).then(result => 
+//         {
+//             res.status(200).json({
 
-                success : true,
-                data : result
+//                 success : true,
+//                 data : result
 
 
 
-        });
-    }).catch(err => {
+//         });
+//     }).catch(err => {
             
-        res.status(500).json({
-            success : false,
-            message : err.message
+//         res.status(500).json({
+//             success : false,
+//             message : err.message
 
-        });
+//         });
 
         
    
-    });
+//     });
 
-};
+// };
 
 
 // updataing
@@ -202,6 +202,6 @@ module.exports = {
     viewTeacher,
     updateTeacher,
     deleteTeacher,
-    findTeacherByID,
+    // findTeacherByID,
     getNextTid
 };
