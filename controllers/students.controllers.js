@@ -168,6 +168,7 @@ const getNextAdmissionNumber = (req, res) => {
 
 }
 
+
 module.exports = {
     enrollStudent,
     viewStudents,
