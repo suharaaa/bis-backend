@@ -6,7 +6,7 @@ const createAttendance = (req, res) => {
 
     const attendance = new Attendance();
 
-    const records = req.body.records.map(r => {
+    const records = req.body.data.map(r => {
         r.teacher = Schema.Types.ObjectId(r.teacher);
         return r;
     });
