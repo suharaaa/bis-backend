@@ -1,4 +1,4 @@
-const Teachers = require('../models/teachers.model')
+const Teacher = require('../models/teacher.model')
 
 const addTeacher = (req, res) => {
     if (!req.body.fname) {
@@ -18,10 +18,10 @@ const addTeacher = (req, res) => {
     
     
     //creating teacher
-    const teachers = new Teachers(req.body);
+    const teacher = new Teacher(req.body);
 
     //save to the database
-    teachers.save().then(result => {
+    teacher.save().then(result => {
         res.status(200).json({
             success: true,
             data: result
@@ -32,12 +32,12 @@ const addTeacher = (req, res) => {
             message: err.message
         });
     });
-}
+};
 
-//finding
-const findTeacher = (req, res) =>{
+//getting teacher list
+const viewTeacher = (req, res) =>{
 
-    Fees.find({}).then(result => 
+    Teacher.find({}).then(result => 
         {
             res.status(200).json({
 
@@ -50,6 +50,7 @@ const findTeacher = (req, res) =>{
     }).catch(err => {
             
         res.status(500).json({
+
             success : false,
             message : err.message
 
@@ -59,32 +60,32 @@ const findTeacher = (req, res) =>{
 
 };
 
+//finding
+// const findTeacherByID = (req, res) =>{
 
-const findTeacherByID = (req, res) =>{
+//     Teacher.findById(req.params.id).then(result => 
+//         {
+//             res.status(200).json({
 
-    Fees.findById(req.params.id).then(result => 
-        {
-            res.status(200).json({
-
-                success : true,
-                data : result
+//                 success : true,
+//                 data : result
 
 
 
-        });
-    }).catch(err => {
+//         });
+//     }).catch(err => {
             
-        res.status(500).json({
-            success : false,
-            message : err.message
+//         res.status(500).json({
+//             success : false,
+//             message : err.message
 
-        });
+//         });
 
         
    
-    });
+//     });
 
-};
+// };
 
 
 // updataing
@@ -104,7 +105,7 @@ const updateTeacher = (req, res) => {
         });
     }
 
-    Task.findByIdAndUpdate(req.params.id, {
+    Teacher.findByIdAndUpdate(req.params.id, {
         fname: req.body.fname,
         lname: req.body.lname,
         address: req.body.address,
@@ -135,21 +136,9 @@ const updateTeacher = (req, res) => {
 };
 
 //deleting
-const DeleteTeacher = (req, res) => {
-
-    if( !req.body.grade){  
-
-        return res.status(400).json({
-
-                success : false,
-                message : "Grade is undefined"
-
-        });  //this checks client sde errors
-
-    }
-
-
-    Fees.findByIdAndDelete(req.params.id).then(result => 
+const deleteTeacher = (req, res) => {
+    
+        Teacher.findByIdAndDelete(req.params.id).then(result => 
         {
             res.status(200).json({
 
@@ -171,11 +160,48 @@ const DeleteTeacher = (req, res) => {
 
 };
 
+//getting next
+const getNextTid = (req, res) => {
+    
+    const start = new Date();
+    start.setMonth(0, 1);
+    start.setHours(0, 0, 0, 0);
+
+    const end = new Date();
+    end.setMonth(11, 31);
+    end.setHours(23, 59, 59, 999);
+
+    Teacher.aggregate([
+        {
+            $match: {
+                createdAt: { $gt: start, $lt: end }
+            }
+        }, {
+            $group: {
+                _id: null,
+                count: {
+                    $sum: 1
+                }
+            }
+        }
+    ]).then(result => {
+        const formattedCount = "000".concat(result[0].count).slice(-4);
+        return res.status(200).json({
+            success: true,
+            data: `T${start.getFullYear().toString().slice(-2)}${formattedCount}`
+        });
+    }).catch(err => res.status(500).json({
+        success: false,
+        message: err.message
+    }));
+
+}
 
 module.exports = {
     addTeacher,
-    findTeacher,
-    findTeacherByID,
+    viewTeacher,
     updateTeacher,
-    DeleteTeacher
+    deleteTeacher,
+    // findTeacherByID,
+    getNextTid
 };
