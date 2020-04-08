@@ -11,4 +11,4 @@ const attendanceSchema = new Schema({
     count: {type: Number}
 },{ timestamps: true });
 
-module.exports = mongoose.model('Attendance', attendanceSchema);
+module.exports = mongoose.model('attendance', attendanceSchema);
