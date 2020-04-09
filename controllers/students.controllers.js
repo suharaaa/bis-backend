@@ -219,7 +219,7 @@ const getNextAdmissionNumber = (req, res) => {
             }
         }
     ]).then(result => {
-        const formattedCount = "000".concat(result[0].count).slice(-4);
+        const formattedCount = "000".concat(++result[0].count).slice(-4);
         return res.status(200).json({
             success: true,
             data: `S${start.getFullYear().toString().slice(-2)}${formattedCount}`

@@ -32,7 +32,7 @@ const addTeacher = (req, res) => {
             message: err.message
         });
     });
-}
+};
 
 //getting teacher list
 const viewTeacher = (req, res) =>{
@@ -61,31 +61,31 @@ const viewTeacher = (req, res) =>{
 };
 
 //finding
-const findTeacherByID = (req, res) =>{
+// const findTeacherByID = (req, res) =>{
 
-    Teacher.findById(req.params.id).then(result => 
-        {
-            res.status(200).json({
+//     Teacher.findById(req.params.id).then(result => 
+//         {
+//             res.status(200).json({
 
-                success : true,
-                data : result
+//                 success : true,
+//                 data : result
 
 
 
-        });
-    }).catch(err => {
+//         });
+//     }).catch(err => {
             
-        res.status(500).json({
-            success : false,
-            message : err.message
+//         res.status(500).json({
+//             success : false,
+//             message : err.message
 
-        });
+//         });
 
         
    
-    });
+//     });
 
-};
+// };
 
 
 // updataing
@@ -188,7 +188,7 @@ const getNextTid = (req, res) => {
         const formattedCount = "000".concat(result[0].count).slice(-4);
         return res.status(200).json({
             success: true,
-            data: `S${start.getFullYear().toString().slice(-2)}${formattedCount}`
+            data: `T${start.getFullYear().toString().slice(-2)}${formattedCount}`
         });
     }).catch(err => res.status(500).json({
         success: false,
@@ -202,6 +202,6 @@ module.exports = {
     viewTeacher,
     updateTeacher,
     deleteTeacher,
-    findTeacherByID,
+    // findTeacherByID,
     getNextTid
 };

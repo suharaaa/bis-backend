@@ -1,23 +1,23 @@
-const Fees = require('../models/fees.model');
+const Users = require('../models/users.model');
 
-const createNewFee = (req, res) => {
+const createNewUser = (req, res) => {
 
-    if( !req.body.grade){  //body has the tasks content, if name isnt defined in body, it gives an error
+    if( !req.body.fullname){  //body has the tasks content, if name isnt defined in body, it gives an error
 
         return res.status(400).json({
 
                 success : false,
-                message : "Grade is undefined"
+                message : "Full name is undefined"
 
         }); 
     }
 
 
-    const fees = new Fees(req.body);
+    const users = new Users(req.body);
 
 
-     //save fees to database
-     fees.save().then(result=> {
+     //save Users to database
+     users.save().then(result=> {
 
         res.status(200).json({
 
@@ -40,11 +40,11 @@ const createNewFee = (req, res) => {
 
 
 
-//to retrieve the fees that are created
+//to retrieve the users that are created
 
-const findFees = (req, res) =>{
+const findUsers = (req, res) =>{
 
-    Fees.find({}).then(result => 
+    Users.find({}).then(result => 
         {
             res.status(200).json({
 
@@ -69,10 +69,10 @@ const findFees = (req, res) =>{
 
 
 
-//find fee by id
-const findFeeID = (req, res) =>{
+//find user by id
+const findUserID = (req, res) =>{
 
-    Fees.findById(req.params.id).then(result => 
+    Users.findById(req.params.id).then(result => 
         {
             res.status(200).json({
 
@@ -99,31 +99,28 @@ const findFeeID = (req, res) =>{
 
 
 
-//update fees
-const UpdateFee = (req, res) => {
+//update users
+const UpdateUser = (req, res) => {
 
-    if( !req.body.grade){  //body has the tasks content, if name isnt defined in body, it gives an error
+    if( !req.body.fullname){  //body has the tasks content, if name isnt defined in body, it gives an error
 
         return res.status(400).json({
 
                 success : false,
-                message : "Grade is undefined"
+                message : "Full name is undefined"
 
         });  //this checks client sde errors
 
     }
 
 
-    Fees.findByIdAndUpdate(req.params.id, {
+    Users.findByIdAndUpdate(req.params.id, {
 
-
+        fullname: req.body.fullname,
+        email : req.body.email,
         grade : req.body.grade,
-        termfee : req.body.termfee,
-        facilityfee : req.body.facilityfee,
-        librarycharges : req.body.librarycharges,
-        laboratorycharges : req.body.laboratorycharges,
-        transportationfee : req.body.transportationfee,
-        other : req.body.other,
+        password : req.body.password,
+        reenter : req.body.reenter,
         updatedOn : new Date()
 
 
@@ -147,22 +144,22 @@ const UpdateFee = (req, res) => {
 };
 
 
-//delete fee
-const DeleteFee = (req, res) => {
+//delete user
+const DeleteUser = (req, res) => {
 
- /*   if( !req.body.grade){  //body has the tasks content, if name isnt defined in body, it gives an error
+    if( !req.body.fullname){  //body has the tasks content, if name isnt defined in body, it gives an error
 
         return res.status(400).json({
 
                 success : false,
-                message : "Grade is undefined"
+                message : "Full name is undefined"
 
         });  //this checks client sde errors
 
-    }*/
+    }
 
 
-    Fees.findByIdAndDelete(req.params.id).then(result => 
+    Users.findByIdAndDelete(req.params.id).then(result => 
         {
             res.status(200).json({
 
@@ -185,14 +182,13 @@ const DeleteFee = (req, res) => {
 };
 
 
-
 module.exports = {
 
-createNewFee,
-findFees,
-findFeeID,
-UpdateFee,
-DeleteFee
+createNewUser,
+findUsers,
+findUserID,
+UpdateUser,
+DeleteUser
 
 
 };
