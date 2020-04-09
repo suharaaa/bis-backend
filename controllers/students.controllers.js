@@ -180,7 +180,9 @@ const updateStudent = (req, res) => {
 //unenroll a student from the system
 const deleteStudentById = (req, res) => {
 
-    Student.findByIdAndDelete(req.params.id).then(result => {
+    Student.findByIdAndDelete(req.params.id)
+    .populate('class')
+    .then(result => {
         res.status(200).json({
             success: true,
             data: result
