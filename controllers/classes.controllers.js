@@ -16,7 +16,7 @@ const createNewClass= (req, res) => {
     const classroom = new Class(req.body);
 
 
-     //save fees to database
+     //save class to database
      classroom.save().then(result=> {
 
         res.status(200).json({
@@ -24,13 +24,13 @@ const createNewClass= (req, res) => {
             success:true,
             data : result
         });
-    }).catch(err => {
+      }).catch(err => {
             
-        res.status(500).json({
+       res.status(500).json({
             success : false,
             message : err.message
 
-        });      
+        });   
 
     });
 
@@ -40,7 +40,7 @@ const createNewClass= (req, res) => {
 
 
 
-//to retrieve the sub that are created
+//to retrieve the classes that are created
 
 const findClass = (req, res) =>{
 
@@ -69,10 +69,10 @@ const findClass = (req, res) =>{
 
 
 
-//find sub by id
+//find class by id
 const findClassID = (req, res) =>{
 
-    Class.findById(req.params.id).then(result => 
+    Class.findById(req.params.id).populate('students').populate('subjects').then(result => 
         {
             res.status(200).json({
 
@@ -99,7 +99,7 @@ const findClassID = (req, res) =>{
 
 
 
-//update sub
+//update class
 const UpdateClass = (req, res) => {
 
     if( !req.body.name){  //body has the tasks content, if name isnt defined in body, it gives an error
@@ -147,7 +147,7 @@ const UpdateClass = (req, res) => {
 //delete sub
 const DeleteClass = (req, res) => {
 
-    if( !req.body.name){  //body has the tasks content, if name isnt defined in body, it gives an error
+   /* if( !req.body.name){  //body has the tasks content, if name isnt defined in body, it gives an error
 
         return res.status(400).json({
 
@@ -156,7 +156,7 @@ const DeleteClass = (req, res) => {
 
         });  //this checks client sde errors
 
-    }
+    }*/
 
 
     Class.findByIdAndDelete(req.params.id).then(result => 
