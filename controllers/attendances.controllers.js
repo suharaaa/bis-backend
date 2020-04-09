@@ -4,16 +4,16 @@ const { Schema } = mongoose;
 
 const createAttendance = (req, res) => {
 
-    const attendance = new Attendance();
+    const attendance = new Attendance(req.body);
 
-    const records = req.body.records.map(r => {
-        r.teacher = Schema.Types.ObjectId(r.teacher);
-        return r;
-    });
+    //const records = req.body.data.map.call(r => {
+     //   r.teacher = Schema.Types.ObjectId(r.teacher);
+     //   return r;
+    //});
 
-    attendance.records = records;
+    //attendance.records = records;
 
-    Attendance.save().then(result => {
+    attendance.save().then(result => {
         res.status(200).json({
             success: true,
             data: result
