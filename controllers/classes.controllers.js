@@ -72,7 +72,7 @@ const findClass = (req, res) =>{
 //find class by id
 const findClassID = (req, res) =>{
 
-    Class.findById(req.params.id).populate('students').populate('subjects').then(result => 
+    Class.findById(req.params.id).then(result => 
         {
             res.status(200).json({
 
@@ -124,7 +124,7 @@ const UpdateClass = (req, res) => {
         
 
 
-    }, {new: true}).then(result => 
+    }).then(result => 
         {
             res.status(200).json({
 

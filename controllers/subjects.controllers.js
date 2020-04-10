@@ -114,7 +114,7 @@ const UpdateSubject = (req, res) => {
 
 
    
-    Class.findByIdAndUpdate(req.params.id, {
+    Subject.findByIdAndUpdate(req.params.id, {
 
 
         
@@ -125,7 +125,7 @@ const UpdateSubject = (req, res) => {
         
 
 
-    }, {new: true}).then(result => 
+    }).then(result => 
         {
             res.status(200).json({
 
