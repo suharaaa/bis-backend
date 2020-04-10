@@ -208,6 +208,7 @@ const deleteStudentById = (req, res) => {
 
 };
 
+//generate the next admission number
 const getNextAdmissionNumber = (req, res) => {
 
     const start = new Date();
