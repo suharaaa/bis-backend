@@ -4,10 +4,15 @@ const { Schema } = mongoose;
 const classSchema = new Schema({
 
     name : { type: String, required: true },
-    classteacher : { type: Schema.Types.ObjectId, ref: 'teachers'},
+    classteacher: {type: String, required: true},
+   // classteacher : { type: Schema.Types.ObjectId, ref: 'teachers'},
 
-    students: [
-        { type: Schema.Types.ObjectId, ref: 'student'}
+   students: [
+        { type: Schema.Types.ObjectId, ref: 'Student'}
+    ],
+    subjects: [
+        { type: Schema.Types.ObjectId, ref: 'Subject' }
+    
     ]
     
 }, { timestamps: true});

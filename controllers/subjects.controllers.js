@@ -14,10 +14,9 @@ const createNewSubject= (req, res) => {
 
 
     const subject = new Subject(req.body);
+   
 
-
-     //save fees to database
-     subject.save().then(result=> {
+    subject.save().then(result=> {
 
         res.status(200).json({
 
@@ -44,7 +43,7 @@ const createNewSubject= (req, res) => {
 
 const findSubjects = (req, res) =>{
 
-    Subjects.find({}).then(result => 
+    Subject.find({}).then(result => 
         {
             res.status(200).json({
 
@@ -114,17 +113,19 @@ const UpdateSubject = (req, res) => {
     }
 
 
+   
     Subject.findByIdAndUpdate(req.params.id, {
 
 
+        
         subjectname : req.body.subjectname,
-        classname : req.body.classname,
-        teachername : req.body.teachername
-        
+        classname: req.body.classname,
+       teachername : req.body.teachername
+      
         
 
 
-    }, {new: true}).then(result => 
+    }).then(result => 
         {
             res.status(200).json({
 
@@ -147,7 +148,7 @@ const UpdateSubject = (req, res) => {
 //delete sub
 const DeleteSubject = (req, res) => {
 
-    if( !req.body.subjectname){  //body has the tasks content, if name isnt defined in body, it gives an error
+   /* if( !req.body.subjectname){  //body has the tasks content, if name isnt defined in body, it gives an error
 
         return res.status(400).json({
 
@@ -156,7 +157,7 @@ const DeleteSubject = (req, res) => {
 
         });  //this checks client sde errors
 
-    }
+    }*/
 
 
     Subject.findByIdAndDelete(req.params.id).then(result => 
