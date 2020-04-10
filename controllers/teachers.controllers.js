@@ -106,6 +106,7 @@ const updateTeacher = (req, res) => {
     }
 
     Teacher.findByIdAndUpdate(req.params.id, {
+        tid: req.body.tid,
         fname: req.body.fname,
         lname: req.body.lname,
         address: req.body.address,
