@@ -133,7 +133,7 @@ const updateStudent = (req, res) => {
         maddress: req.body.maddress,
         mphone: req.body.mphone,
         memail: req.body.memail,
-        fname: req.body.fname,
+        faname: req.body.faname,
         foccupation: req.body.foccupation,
         fworkp: req.body.fworkp,
         faddress: req.body.maddress,
@@ -182,7 +182,9 @@ const deleteStudentById = (req, res) => {
 
     Student.findByIdAndDelete(req.params.id)
     .then(s => {
-        Classes.findOneAndDelete({
+        console.log(s);
+        
+        Classes.findOneAndUpdate({
             students: mongoose.Types.ObjectId(req.params.id)
         }, {
             $pullAll: {
