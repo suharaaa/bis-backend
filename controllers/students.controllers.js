@@ -220,12 +220,15 @@ const getNextAdmissionNumber = (req, res) => {
 
     Student.find({ createdAt: { $gt: start, $lt: end } }, 'admissionNumber')
         .sort('-createdAt').then(result => {
-            const nextNum = parseInt(result.shift().admissionNumber.slice(-4)) + 1;
+
+            let nextNum = result.length === 0 ? 1 : parseInt(result.shift().admissionNumber.slice(-4)) + 1;
+
             const formattedCount = "000".concat(nextNum).slice(-4);
             return res.status(200).json({
                 success: true,
                 data: `S${start.getFullYear().toString().slice(-2)}${formattedCount}`
             });
+
     }).catch(err => res.status(500).json({
         success: false,
         message: err.message
