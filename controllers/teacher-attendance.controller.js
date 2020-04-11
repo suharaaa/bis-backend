@@ -46,35 +46,7 @@ const getTeacherAttendanceByDate = async (req, res) => {
     
         const teachers = await Teacher.find({});
 
-        let result = [];
-
-        if (attendanceRecords.length > 0) {
-            for (const t of teachers) {
-
-                for (const a of attendanceRecords) {
-
-                    if (a.teacher && mongoose.Types.ObjectId(a.teacher._id).equals(mongoose.Types.ObjectId(t._id))) {
-                        result.push(a);
-                    } else {
-                        result.push({
-                            teacher: t,
-                            status: 'absent',
-                            date: req.params.date
-                        });
-                    }
-
-                }
-
-            }
-        } else {
-            result = teachers.map(t => {
-                return {
-                    teacher: t,
-                    status: 'absent',
-                    date: req.params.date
-                };
-            });
-        }
+        let result = generateAttendanceRecords(teachers, attendanceRecords, req.params.date);
 
         return handleSuccessResponse(res, result);
 
@@ -85,6 +57,26 @@ const getTeacherAttendanceByDate = async (req, res) => {
         return handleError(res, err.message);
 
     }
+
+};
+
+const generateAttendanceRecords = (teachers, attendanceRecords, date, results = []) => {
+    if (teachers.length === 0) return results;
+    
+    const t = teachers.shift();
+    
+    for (const a of attendanceRecords) {
+
+        if (a.teacher && mongoose.Types.ObjectId(a.teacher._id).equals(mongoose.Types.ObjectId(t._id))) {
+            results.push(a);
+            return generateAttendanceRecords(teachers, attendanceRecords, date, results);
+        }
+
+    }
+
+    results.push({ teacher: t, status: 'absent', date });
+
+    return generateAttendanceRecords(teachers, attendanceRecords, date, results);
 
 };
 
