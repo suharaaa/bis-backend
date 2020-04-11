@@ -7,7 +7,7 @@ const createNewResult = (req, res) => {
         return res.status(400).json({
 
                 success : false,
-                message : "Grade is undefined"
+                message : "Result is undefined"
 
         }); 
     }
@@ -81,6 +81,10 @@ const UpdateResults = (req, res) => {
     }
     Results.findByIdAndUpdate(req.params.id, {
 
+        grade : req.body.grade,
+        term : req.body.term,
+        subject : req.body.subject,
+        name : req.body.name,
         marks : req.body.marks,
         
     }, {new: true}).then(result => 
@@ -100,6 +104,33 @@ const UpdateResults = (req, res) => {
         });    
    
     });
+};
+
+//find result by id
+const findResultID = (req, res) =>{
+
+    Results.findById(req.params.id).then(result => 
+        {
+            res.status(200).json({
+
+                success : true,
+                data : result
+
+
+
+        });
+    }).catch(err => {
+            
+        res.status(500).json({
+            success : false,
+            message : err.message
+
+        });
+
+        
+   
+    });
+
 };
 
 
@@ -140,8 +171,9 @@ Results.findByIdAndDelete(req.params.id).then(result =>
 
 module.exports = {
 
-createNewResult ,
+createNewResult,
 viewResults,
 UpdateResults,
 DeleteResults,
+findResultID
 };
