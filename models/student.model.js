@@ -31,6 +31,7 @@ const studentSchema = new Schema({
     faddress: { type: String },
     fphone: { type: Number, required: true },
     femail: { type: String },
+    archive : { type: Boolean, default: false}
 
 }, { timestamps: true });
 
