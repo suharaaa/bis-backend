@@ -1,4 +1,4 @@
-const express = require('express');
+const express  = require('express');
 const database = require('./util/database');
 const middleware = require('./middleware');
 const routes = require('./routes');
