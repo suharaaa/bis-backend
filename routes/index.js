@@ -7,6 +7,7 @@ const studentsRouter = require('./students.routes');
 const teachersRouter = require('./teachers.routes');
 const usersRouter = require('./users.routes');
 const subjectsRouter = require('./subjects.routes');
+const statisticsRouter = require('./statistics.routes');
 
 const init = app => {
 
@@ -19,7 +20,8 @@ const init = app => {
     app.use(teachersRouter);
     app.use(usersRouter);
     app.use(subjectsRouter);
-
+    app.use(statisticsRouter);
+    
 };
 
 module.exports = init;
