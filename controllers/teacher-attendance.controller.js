@@ -38,39 +38,49 @@ const getTeacherAttendanceByDate = async (req, res) => {
 
     try {
 
+        console.log('get teacher attendance by date');
+
         const attendanceRecords = await TeacherAttendance
             .find({ date: { $eq: req.query.date }})
             .populate('teacher');
     
         const teachers = await Teacher.find({});
 
-        const result = [];
+        let result = [];
 
-        for(const t of teachers) {
+        if (attendanceRecords.length > 0) {
+            for (const t of teachers) {
 
-            for(const a of attendanceRecords) {
-                
-                if (mongoose.Types.ObjectId(a.teacher._id).equals(mongoose.Types.ObjectId(t._id))) {
-                    result.push(a);
-                } else {
-                    const teacher = await Teacher.findById(t._id);
-                    result.push({
-                        _id: t._id,
-                        teacher,
-                        status: 'absent',
-                        date: req.params.date
-                    });
+                for (const a of attendanceRecords) {
+
+                    if (a.teacher && mongoose.Types.ObjectId(a.teacher._id).equals(mongoose.Types.ObjectId(t._id))) {
+                        result.push(a);
+                    } else {
+                        result.push({
+                            teacher: t,
+                            status: 'absent',
+                            date: req.params.date
+                        });
+                    }
+
                 }
 
             }
-
+        } else {
+            result = teachers.map(t => {
+                return {
+                    teacher: t,
+                    status: 'absent',
+                    date: req.params.date
+                };
+            });
         }
 
         return handleSuccessResponse(res, result);
 
     } catch (err) {
 
-        console.log(JSON.stringify(err));
+        console.log(err);
 
         return handleError(res, err.message);
 
@@ -106,9 +116,11 @@ const createNewTeacherAttendance = async (req, res) => {
 const updateTeacherAttendance = async (req, res) => {
 
     const attendance = await TeacherAttendance.findOne({
-        date: req.query.date,
-        teacher: mongoose.Types.ObjectId(req.body.teacher)
+        date: req.body.date,
+        teacher: mongoose.Types.ObjectId(req.params.id)
     });
+
+    console.log(attendance);
 
     if (!attendance) {
 
@@ -121,7 +133,7 @@ const updateTeacherAttendance = async (req, res) => {
     } else {
 
         TeacherAttendance.findOneAndUpdate({
-            date: req.query.date,
+            date: req.body.date,
             teacher: mongoose.Types.ObjectId(req.params.id)
         }, {
             status: req.body.status

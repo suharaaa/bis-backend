@@ -8,5 +8,7 @@ router.get('/classes/:id', classController.findClassID);
 router.put('/classes/:id', classController.UpdateClass);
 router.delete('/classes/:id', classController.DeleteClass);
 router.post('/classes/:id/students', classController.UpdateStudent);
+router.post('/classes/:id/subjects', classController.UpdateSub);
+
 
 module.exports = router;
