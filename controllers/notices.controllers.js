@@ -78,6 +78,7 @@ const updateNoticeById = (req, res) => {
     Notice.findByIdAndUpdate(req.params.id,{
         title: req.body.title,
         content: req.body.content,
+        teachersOnly: req.body.teachersOnly,
         expiresOn: req.body.expiresOn,
         updatedOn: new Date()
     }, {new: true}).then(result => {
