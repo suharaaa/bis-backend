@@ -57,7 +57,28 @@ const enrollStudent = (req, res) => {
 //get all students
 const viewStudents = (req, res) => {
 
-    Student.find({})
+    Student.find({ archive: false})
+        .populate('class')
+        .then(result => {
+
+            res.status(200).json({
+                success: true,
+                data: result
+            });
+
+        }).catch(err => {
+            res.status(500).json({
+                success: false,
+                message: err.message
+            });
+        });
+
+};
+
+//get unenrolled students
+const viewUnenrolledStudents = (req, res) => {
+
+    Student.find({ archive: true})
         .populate('class')
         .then(result => {
 
@@ -177,13 +198,11 @@ const updateStudent = (req, res) => {
     });
 };
 
-//unenroll a student from the system
-const deleteStudentById = (req, res) => {
-
-    Student.findByIdAndDelete(req.params.id)
+const unenrollStudent = (req, res) => {
+    Student.findByIdAndUpdate( req.params.id, {
+        archive: true
+    }, {new: true})
     .then(s => {
-        console.log(s);
-        
         Classes.findOneAndUpdate({
             students: mongoose.Types.ObjectId(req.params.id)
         }, {
@@ -207,7 +226,23 @@ const deleteStudentById = (req, res) => {
             message: err.message
         });
     });
+};
 
+//unenroll a student from the system
+const deleteStudentById = (req, res) => {
+
+    Student.findByIdAndDelete(req.params.id)
+    .then(result => {
+            res.status(200).json({
+                success: true,
+                data: result
+            });
+    }).catch(err => {
+        res.status(500).json({
+            success: false,
+            message: err.message
+        });
+    });
 };
 
 //generate the next admission number
@@ -243,8 +278,10 @@ const getNextAdmissionNumber = (req, res) => {
 module.exports = {
     enrollStudent,
     viewStudents,
+    viewUnenrolledStudents,
     viewStudentId,
     updateStudent,
+    unenrollStudent,
     deleteStudentById,
     getNextAdmissionNumber
 };
