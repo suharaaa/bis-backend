@@ -187,11 +187,54 @@ const getNextTid = (req, res) => {
 
 }
 
+const viewHistory = (req, res) => {
+
+    Teacher.find({ archive: true})
+        
+        .then(result => {
+
+            res.status(200).json({
+                success: true,
+                data: result
+            });
+
+        }).catch(err => {
+            res.status(500).json({
+                success: false,
+                message: err.message
+            });
+        });
+
+}
+
+
+const moveTeacher = (req, res) => {
+    Teacher.findByIdAndUpdate( req.params.id, {
+        archive: true
+    }, {new: true})
+    .then(result => {
+        res.status(200).json({
+            success: true,
+            data: result
+        });
+    }).catch(err => {
+        res.status(500).json({
+            success: false,
+            message: err.message
+        });
+    
+    
+    });
+};
+
+
 module.exports = {
     addTeacher,
     viewTeacher,
     updateTeacher,
     deleteTeacher,
     viewTeacherId,
-    getNextTid
+    getNextTid,
+    viewHistory,
+    moveTeacher
 };
