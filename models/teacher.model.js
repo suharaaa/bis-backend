@@ -18,7 +18,7 @@ const teacherSchema = new mongoose.Schema({
     mail: { type: String, required: true},
     nationality: { type: String, required: true},
     qul: { type: String, required: true},
-    archive : { type: Boolean, default: false}
+    // history : { type: Boolean, default: false}
     
 
 },  { timestamps: true });

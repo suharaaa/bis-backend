@@ -185,47 +185,47 @@ const getNextTid = (req, res) => {
         message: err.message
     }));
 
-}
-
-const viewHistory = (req, res) => {
-
-    Teacher.find({ archive: true})
-        
-        .then(result => {
-
-            res.status(200).json({
-                success: true,
-                data: result
-            });
-
-        }).catch(err => {
-            res.status(500).json({
-                success: false,
-                message: err.message
-            });
-        });
-
-}
-
-
-const moveTeacher = (req, res) => {
-    Teacher.findByIdAndUpdate( req.params.id, {
-        archive: true
-    }, {new: true})
-    .then(result => {
-        res.status(200).json({
-            success: true,
-            data: result
-        });
-    }).catch(err => {
-        res.status(500).json({
-            success: false,
-            message: err.message
-        });
-    
-    
-    });
 };
+
+// const showHistory = (req, res) => {
+
+//     Teacher.find({ history: true})
+        
+//         .then(result => {
+
+//             res.status(200).json({
+//                 success: true,
+//                 data: result
+//             });
+
+//         }).catch(err => {
+//             res.status(500).json({
+//                 success: false,
+//                 message: err.message
+//             });
+//         });
+
+// };
+
+
+// const moveTeacher = (req, res) => {
+//     Teacher.findByIdAndUpdate( req.params.id, {
+//         history: true
+//     }, {new: true})
+//     .then(result => {
+//         res.status(200).json({
+//             success: true,
+//             data: result
+//         });
+//     }).catch(err => {
+//         res.status(500).json({
+//             success: false,
+//             message: err.message
+//         });
+    
+    
+//     });
+// };
 
 
 module.exports = {
@@ -235,6 +235,6 @@ module.exports = {
     deleteTeacher,
     viewTeacherId,
     getNextTid,
-    viewHistory,
-    moveTeacher
+    // showHistory,
+    // moveTeacher
 };
