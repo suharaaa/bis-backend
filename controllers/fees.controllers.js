@@ -151,7 +151,7 @@ const UpdateFee = (req, res) => {
 
 const UpdateFee = (req, res) => {
 
-    if( !req.body.grade){  //body has the tasks content, if name isnt defined in body, it gives an error
+    if( !req.body.grade){  //body has the tasks content, if grade isnt defined in body, it gives an error
 
         return res.status(400).json({
 
@@ -175,6 +175,7 @@ const UpdateFee = (req, res) => {
         laboratorycharges : req.body.laboratorycharges,
         transportationfee : req.body.transportationfee,
         other : req.body.other,
+        tot : req.body.tot,
         updatedOn : new Date()
       
         
@@ -210,16 +211,7 @@ const UpdateFee = (req, res) => {
 //delete fee
 const DeleteFee = (req, res) => {
 
- /*   if( !req.body.grade){  //body has the tasks content, if name isnt defined in body, it gives an error
 
-        return res.status(400).json({
-
-                success : false,
-                message : "Grade is undefined"
-
-        });  //this checks client sde errors
-
-    }*/
 
 
     Fees.findByIdAndDelete(req.params.id).then(result => 
