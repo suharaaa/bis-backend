@@ -1,4 +1,5 @@
-const Teacher = require('../models/teacher.model')
+const Teacher = require('../models/teacher.model');
+const mongoose = require('mongoose');
 
 const addTeacher = (req, res) => {
     if (!req.body.fname) {
@@ -37,7 +38,7 @@ const addTeacher = (req, res) => {
 //getting teacher list
 const viewTeacher = (req, res) =>{
 
-    Teacher.find({}).then(result => 
+    Teacher.find({history: false}).then(result => 
         {
             res.status(200).json({
 
@@ -55,25 +56,6 @@ const viewTeacher = (req, res) =>{
    
         });
 
-};
-
-//finding
-
-const viewTeacherId = (req, res) => {
-    Teacher.findById(req.params.id)
-        
-        .then(result => {
-            res.status(200).json({
-                success: true,
-                data: result
-            });
-
-        }).catch(err => {
-            res.status(500).json({
-                success: false,
-                message: err.message
-            });
-        });
 };
 
 
@@ -96,6 +78,7 @@ const updateTeacher = (req, res) => {
 
     Teacher.findByIdAndUpdate(req.params.id, {
         tid: req.body.tid,
+        
         fname: req.body.fname,
         lname: req.body.lname,
         address: req.body.address,
@@ -111,7 +94,7 @@ const updateTeacher = (req, res) => {
         qul: req.body.qul,
        
     
-    }).then(result => {
+    }, {new: true}).then(result => {
         res.status(200).json({
             success: true,
             data: result
@@ -187,12 +170,13 @@ const getNextTid = (req, res) => {
 
 };
 
-// const showHistory = (req, res) => {
 
-//     Teacher.find({ history: true})
+// //finding
+
+// const viewTeacherId = (req, res) => {
+//     Teacher.findById(req.params.id)
         
 //         .then(result => {
-
 //             res.status(200).json({
 //                 success: true,
 //                 data: result
@@ -204,28 +188,69 @@ const getNextTid = (req, res) => {
 //                 message: err.message
 //             });
 //         });
-
 // };
 
+//searching
 
-// const moveTeacher = (req, res) => {
-//     Teacher.findByIdAndUpdate( req.params.id, {
-//         history: true
-//     }, {new: true})
-//     .then(result => {
-//         res.status(200).json({
-//             success: true,
-//             data: result
-//         });
-//     }).catch(err => {
-//         res.status(500).json({
-//             success: false,
-//             message: err.message
-//         });
+const viewTeacherId = (req,res) =>{
+    Teacher.findById(req.params.id)
+    .then(result =>{
+        res.status(200).json({
+            success: true,
+            data: result
+        });
+
+    }).catch(err => {
+        res.status(500).json({
+            success:false,
+            message: err.message
+        });
+    });
+};
+
+
+//view cleared teachers
+const showHistory = (req, res) => {
+
+    Teacher.find({ history: true})
+        
+        .then(result => {
+
+            res.status(200).json({
+                success: true,
+                data: result
+            });
+
+        }).catch(err => {
+            res.status(500).json({
+                success: false,
+                message: err.message
+            });
+        });
+
+};
+
+//clear a teacher
+const moveTeacher = (req, res) => {
+    Teacher.findByIdAndUpdate( req.params.id, {
+        history: true
+    }, {new: true})
+    
+    .then(result => {
+        
+        res.status(200).json({
+            success: true,
+            data: result
+        });
+    }).catch(err => {
+        res.status(500).json({
+            success: false,
+            message: err.message
+        });
     
     
-//     });
-// };
+    });
+};
 
 
 module.exports = {
@@ -235,6 +260,6 @@ module.exports = {
     deleteTeacher,
     viewTeacherId,
     getNextTid,
-    // showHistory,
-    // moveTeacher
+    showHistory,
+    moveTeacher
 };
