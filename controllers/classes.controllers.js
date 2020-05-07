@@ -1,4 +1,6 @@
 const Class = require('../models/class.model');
+const Teacher = require('../models/teacher.model');
+const mongoose = require('mongoose');
 
 const createNewClass= (req, res) => {
 
@@ -12,9 +14,9 @@ const createNewClass= (req, res) => {
         }); 
     }
 
-
+    //create new class
     const classroom = new Class(req.body);
-
+    classroom.teacher = mongoose.Types.ObjectId(req.body.teacher);
 
      //save class to database
      classroom.save().then(result=> {
@@ -44,7 +46,7 @@ const createNewClass= (req, res) => {
 
 const findClass = (req, res) =>{
 
-    Class.find({}).then(result => 
+    Class.find({}).populate('teacher').then(result => 
         {
             res.status(200).json({
 
@@ -72,7 +74,7 @@ const findClass = (req, res) =>{
 //find class by id
 const findClassID = (req, res) =>{
 
-    Class.findById(req.params.id).then(result => 
+    Class.findById(req.params.id).populate('teacher').then(result => 
         {
             res.status(200).json({
 
@@ -119,7 +121,7 @@ const UpdateClass = (req, res) => {
 
         
         name : req.body.name,
-       classteacher : req.body.classteacher
+        teacher : mongoose.Types.ObjectId(req.body.teacher)
         
         
 
