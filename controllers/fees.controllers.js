@@ -162,6 +162,7 @@ const UpdateFee = (req, res) => {
 
     }
 
+    
 
    
     Fees.findByIdAndUpdate(req.params.id, {
