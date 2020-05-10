@@ -328,6 +328,29 @@ const getNextAdmissionNumber = (req, res) => {
     );
 };
 
+const updateStudentImage = (req, res) => {
+  const { img } = req.body;
+  
+  if (!img) {
+    return res.status(400).json({
+      success: false, error: 'img is required'
+    })
+  }
+
+  Student.findByIdAndUpdate(req.params.id, { img }, { new: true })
+    .then((result) => {
+      res.status(200).json({
+        success: true,
+        data: result,
+      });
+    }).catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: err.message,
+      });
+    });
+}
+
 module.exports = {
   enrollStudent,
   viewStudents,
@@ -336,6 +359,6 @@ module.exports = {
   updateStudent,
   unenrollStudent,
   deleteStudentById,
-  getNextAdmissionNumber
-  // studentImage,
+  getNextAdmissionNumber,
+  updateStudentImage,
 };
