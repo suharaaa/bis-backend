@@ -3,6 +3,7 @@ const studentController = require('../controllers/students.controllers')
 
 // define routes here
 router.get('/students/admissionNumber', studentController.getNextAdmissionNumber);
+// router.post('/students/img' , upload.single('productImage'), studentController.studentImage);
 router.post('/students', studentController.enrollStudent);
 router.get('/students', studentController.viewStudents);
 router.get('/students/archived', studentController.viewUnenrolledStudents);
