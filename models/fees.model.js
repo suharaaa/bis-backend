@@ -9,6 +9,7 @@ const feesSchema = new mongoose.Schema({
     laboratorycharges :{ type :Number  },
     transportationfee :{ type :Number },
     other :{ type :Number },
+    tot : { type :Number },
 
 
     craetedOn : { type : Date, default: new Date() },  //records time the task was created
