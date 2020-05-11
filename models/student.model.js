@@ -16,7 +16,7 @@ const studentSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "Classes",
     },
-    // img: { type: String, required: true },
+    img: { type: String },
 
     mname: { type: String, required: true },
     moccupation: { type: String, required: true },
