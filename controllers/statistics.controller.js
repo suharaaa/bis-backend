@@ -99,36 +99,40 @@ const getTeachersBySubjects = async (req, res) => {
         end.setMonth(11, 31);
         end.setHours(23, 59, 59, 999);
 
-        const thisYearEnglish = await Class.find({
+        const thisYearEnglish = await Student.find({
             createdAt: {
                 $gt: start, $lt: end
             },
-        [students]: 'Grade 01'
-        }).populate('student').count();
+           
+           name : 'Grade 01'
+        }).populate({path:'students'}).count();
 
-        const thisYearMaths = await Class.find({
+        const thisYearMaths = await Student.find({
             createdAt: {
                 $gt: start, $lt: end
             },
-            [students]: 'Grade 02'
-        }).populate('student').count();
+        
+            name: 'Grade 02'
+        }).populate({path:'students'}).count();
 
         start.setFullYear(start.getFullYear() - 1);
         end.setFullYear(end.getFullYear() - 1);
 
-        const lastYearEnglish = await Class.find({
+        const lastYearEnglish = await Student.find({
             createdAt: {
                 $gt: start, $lt: end
             },
-            [students]: 'Grade 01'
-        }).populate('student').count();
+        
+            name: 'Grade 01'
+        }).populate({path:'students'}).count();
 
-        const lastYearMaths = await Class.find({
+        const lastYearMaths = await Student.find({
             createdAt: {
                 $gt: start, $lt: end
             },
-            [students]: 'Grade 02'
-        }).populate('student').count();
+            
+            name: 'Grade 02'
+        }).populate({path:'students'}).count();
 
        
 
