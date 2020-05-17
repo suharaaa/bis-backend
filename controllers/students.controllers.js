@@ -4,7 +4,6 @@ const Classes = require("../models/class.model");
 // const multer = require("multer");
 // const upload = multer({ dest: "uploads/" });
 
-
 const enrollStudent = (req, res) => {
   if (!req.body.fname) {
     return res.status(400).json({
@@ -60,35 +59,6 @@ const enrollStudent = (req, res) => {
       });
     });
 };
-
-//save student img
-// const studentImage = (req, res, next) => {
-//   const student = new Student({
-//     _id: new mongoose.Types.ObjectId(),
-//     studentImage: req.file.path 
-//   });
-//   student
-//     .save()
-//     .then(result => {
-//       console.log(result);
-//       res.status(201).json({
-//         message: "Created product successfully",
-//         createdProduct: {
-//             _id: result._id,
-//             request: {
-//                 type: 'GET',
-//                 url: "http://localhost:3000/students/img/" + result._id
-//             }
-//         }
-//       });
-//     })
-//     .catch(err => {
-//       console.log(err);
-//       res.status(500).json({
-//         error: err
-//       });
-//     });
-// };
 
 //get all students
 const viewStudents = (req, res) => {
@@ -330,11 +300,12 @@ const getNextAdmissionNumber = (req, res) => {
 
 const updateStudentImage = (req, res) => {
   const { img } = req.body;
-  
+
   if (!img) {
     return res.status(400).json({
-      success: false, error: 'img is required'
-    })
+      success: false,
+      error: "img is required",
+    });
   }
 
   Student.findByIdAndUpdate(req.params.id, { img }, { new: true })
@@ -343,13 +314,14 @@ const updateStudentImage = (req, res) => {
         success: true,
         data: result,
       });
-    }).catch((err) => {
+    })
+    .catch((err) => {
       res.status(500).json({
         success: false,
         message: err.message,
       });
     });
-}
+};
 
 module.exports = {
   enrollStudent,
