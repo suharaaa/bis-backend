@@ -1,13 +1,9 @@
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const multer = require('multer');
+const bodyParser = require("body-parser");
+const cors = require("cors");
 
-const init = app => {
-
-    app.use(bodyParser.json());
-    app.use(cors());
-    // app.use('/uploads', express.static('uploads'));
-
+const init = (app) => {
+  app.use(bodyParser.json());
+  app.use(cors());
 };
 
 module.exports = init;

@@ -62,8 +62,18 @@ const enrollStudent = (req, res) => {
 
 //get all students
 const viewStudents = (req, res) => {
-  Student.find({ archive: false })
+  const page = req.query.page;
+  const limit = req.query.limit;
+
+  const startIndex = (page - 1) * limit;
+  const endIndex = page * limit;
+
+  const results = {};
+
+  results.results = Student.find({ archive: false })
     .populate("class")
+    // .where('students')
+    // .slice(startIndex, endIndex)
     .then((result) => {
       res.status(200).json({
         success: true,
