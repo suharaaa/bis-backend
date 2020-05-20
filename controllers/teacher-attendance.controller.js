@@ -38,7 +38,7 @@ const getTeacherAttendanceByDate = async (req, res) => {
 
     try {
 
-        console.log('get teacher attendance by date');
+        // console.log('get teacher attendance by date');
 
         const attendanceRecords = await TeacherAttendance
             .find({ date: { $eq: req.query.date }})

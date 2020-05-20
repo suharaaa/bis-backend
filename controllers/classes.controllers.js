@@ -1,5 +1,6 @@
 const Class = require('../models/class.model');
 const Teacher = require('../models/teacher.model');
+const Student = require('../models/student.model');
 const mongoose = require('mongoose');
 
 const createNewClass= (req, res) => {
@@ -46,7 +47,7 @@ const createNewClass= (req, res) => {
 
 const findClass = (req, res) =>{
 
-    Class.find({}).populate('teacher').then(result => 
+    Class.find({}).populate('teacher').populate('student').then(result => 
         {
             res.status(200).json({
 
@@ -220,7 +221,7 @@ const UpdateSub = (req, res) => {
         }, { new: true }).then(data => res.status(200).json({ data }))
             .catch(err => res.status(500).json({ error: err.message }));
 
-    }).catch(err => res.status(500).json({ error: err.message }));
+    }).catch(err => res.status(500).json({ error: err.message })); 
 
 }
 
