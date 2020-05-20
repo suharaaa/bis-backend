@@ -171,6 +171,7 @@ const updateStudent = (req, res) => {
       faddress: req.body.maddress,
       fphone: req.body.fphone,
       femail: req.body.femail,
+      img: req.body.img
     },
     { new: true }
   )
