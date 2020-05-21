@@ -4,6 +4,7 @@ const Class = require('../models/class.model');
 const Subject = require('../models/subject.model');
 
 
+
 const getStatistics = async (req, res) => {
 
     try {
@@ -86,58 +87,66 @@ const getStudentEnrollmentCountsByYear = async (req, res) => {
 
 
 
-const getTeachersBySubjects = async (req, res) => {
+
+
+
+
+const getStudentsByClass = async (req, res) => {
 
     try {
 
-        const start = new Date();
-        const end = new Date();
         
-        start.setMonth(0, 1);
-        start.setHours(0, 0, 0, 0);
 
-        end.setMonth(11, 31);
-        end.setHours(23, 59, 59, 999);
-
-        const thisYearEnglish = await Student.find({
-            createdAt: {
-                $gt: start, $lt: end
-            },
+        const thisYear01 = await Student.find({
+        
            
-           name : 'Grade 01'
-        }).populate({path:'students'}).count();
-
-        const thisYearMaths = await Student.find({
-            createdAt: {
-                $gt: start, $lt: end
-            },
+           class : '5eb2c75b3c579544f47c47ab'
+          
+          
+           
+        }).populate({path:'class'}) .count();
         
-            name: 'Grade 02'
-        }).populate({path:'students'}).count();
-
-        start.setFullYear(start.getFullYear() - 1);
-        end.setFullYear(end.getFullYear() - 1);
-
-        const lastYearEnglish = await Student.find({
-            createdAt: {
-                $gt: start, $lt: end
-            },
-        
-            name: 'Grade 01'
-        }).populate({path:'students'}).count();
-
-        const lastYearMaths = await Student.find({
-            createdAt: {
-                $gt: start, $lt: end
-            },
+        const thisYear02 = await Student.find({
             
-            name: 'Grade 02'
-        }).populate({path:'students'}).count();
+            
+            class: '5eb2c7673c579544f47c47ac'
+           
+        }) .populate({path:'class'}).count();
+        
+        const thisYear03 = await Student.find({
+        
+            
+            class: '5ebd6fc97b06ed23e8ad6afe'
+            
+        }).populate({path:'class'}) .count();
+
+        const thisYear04 = await Student.find({
+            
+           
+           
+        
+           class : '5ebd6fd97b06ed23e8ad6aff'
+        
+          
+          
+           
+        }).populate({path:'class'}) .count();
+
+        const thisYear05 = await Student.find({
+            
+           
+           class : '5ebd6fe07b06ed23e8ad6b00'
+           
+          
+          
+           
+        }).populate({path:'class'}) .count();
+        
 
        
 
         return res.status(200).json({
-            success: true, data: { thisYearEnglish, thisYearMaths, lastYearEnglish,lastYearMaths }
+            success: true, data: { thisYear01, thisYear02,thisYear03, thisYear04,thisYear05}
         });
 
     } catch (err) {
@@ -151,5 +160,5 @@ const getTeachersBySubjects = async (req, res) => {
 module.exports = {
     getStatistics,
     getStudentEnrollmentCountsByYear,
-    getTeachersBySubjects
+    getStudentsByClass
 };
