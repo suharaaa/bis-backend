@@ -61,23 +61,23 @@ const enrollStudent = (req, res) => {
 };
 
 //get all students
-const viewStudents = (req, res) => {
-  const page = req.query.page;
-  const limit = req.query.limit;
-
-  const startIndex = (page - 1) * limit;
-  const endIndex = page * limit;
+const viewStudents = async (req, res) => {
+  const page = parseInt(req.query.page);
+  const limit = parseInt(req.query.limit);
 
   const results = {};
 
+  const count = await Student.count();
+
   results.results = Student.find({ archive: false })
     .populate("class")
-    // .where('students')
-    // .slice(startIndex, endIndex)
+    .skip(page * limit)
+    .limit(limit)
     .then((result) => {
       res.status(200).json({
         success: true,
         data: result,
+        count
       });
     })
     .catch((err) => {
