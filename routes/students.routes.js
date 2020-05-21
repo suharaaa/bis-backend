@@ -9,6 +9,7 @@ router.get('/students/archived', studentController.viewUnenrolledStudents);
 router.get('/students/:id', studentController.viewStudentId);
 router.put('/students/:id', studentController.updateStudent);
 router.put('/students/:id/archived', studentController.unenrollStudent);
+router.put('/students/:id/img', studentController.updateStudentImage);
 router.delete('/students/:id', studentController.deleteStudentById);
 
 module.exports = router;

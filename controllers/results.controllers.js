@@ -1,7 +1,11 @@
 const Results = require('../models/results.model');
+const Students = require('../models/student.model');
+const Classes = require('../models/class.model');
+const mongoose = require('mongoose');
 
 const createNewResult = (req, res) => {
 
+   
     if( !req.body.marks){  //body has the tasks content, if name isnt defined in body, it gives an error
 
         return res.status(400).json({
@@ -12,37 +16,65 @@ const createNewResult = (req, res) => {
         }); 
     }
 
-
-    const results = new Results(req.body);
-
-
-     //save results to database
-     results.save().then(result=> {
-
-        res.status(200).json({
-
-            success:true,
-            data : results
-        })
-        
-    }).catch(err => {
-            
-        res.status(500).json({
-            success : false,
-            message : err.message
-
-        });      
-
-    });
+    //save results to database
+    const result = new Results(req.body);
+    result.students = mongoose.Types.ObjectId(req.body.students);
+    result.class = mongoose.Types.ObjectId(req.body.class);
 
 
-}
+
+     //save to db
+     result.save()
+         .then(s => {
+             Results.findByIdAndUpdate(req.body.class, {
+                 $push: {
+                     results: mongoose.Types.ObjectId(result._id)
+                 }
+             }).then(result => {
+                 res.status(200).json({
+                     success: true,
+                     data: result
+                 });
+             }).catch(err => {
+                 res.status(500).json({
+                     success: false,
+                     message: err.message
+                 });
+             });
+         }).catch(err => {
+             res.status(500).json({
+                 success: false,
+                 message: err.message
+             });
+         });
+ };
 
 //to retrieve the results that are created
 
-const viewResults = (req, res) =>{
+const viewResults = (req, res) => {
 
-    Results.find({}).then(result => 
+Results.find({}).populate('students').populate('class')
+        
+        .then(result => {
+
+            res.status(200).json({
+                success: true,
+                data: result
+            });
+
+        }).catch(err => {
+            res.status(500).json({
+                success: false,
+                message: err.message
+            });
+        });
+
+};
+
+//find result by id
+const findResultID = (req, res) =>{
+
+    Results.findById(req.params.id).populate('students').populate('class').then(result => 
         {
             res.status(200).json({
 
@@ -58,7 +90,9 @@ const viewResults = (req, res) =>{
             success : false,
             message : err.message
 
-        }); 
+        });
+
+        
    
     });
 
@@ -66,28 +100,78 @@ const viewResults = (req, res) =>{
 
 
 
-//update Result
-const UpdateResults = (req, res) => {
+/*const UpdateResults = (req, res) => {
+
+    if( !req.body.name){  //body has the tasks content, if name isnt defined in body, it gives an error
+
+        return res.status(400).json({
+
+                success : false,
+                message : "Result is undefined"
+
+        });  //this checks client sde errors
+
+    }
+
+
+    Results.findByIdAndUpdate(req.params.id, {
+
+        class : mongoose.Types.ObjectId(req.body.class),
+        term : req.body.term,
+        subject : req.body.subject,
+        students: mongoose.Types.ObjectId(req.body.students),
+        marks : req.body.marks
+        
+
+    }).then(result => 
+        {
+            res.status(200).json({
+
+                success : true,
+                data : result
+
+        });
+    }).catch(err => {
+            
+        res.status(500).json({
+            success : false,
+            message : err.message
+
+        });    
+   
+    });
+};*/
+
+const UpdateResults= (req, res) => {
 
     if( !req.body.marks){  //body has the tasks content, if name isnt defined in body, it gives an error
 
         return res.status(400).json({
 
                 success : false,
-                message : "mark is undefined"
+                message : "Result is undefined"
 
         });  //this checks client sde errors
 
     }
+
+
     Results.findByIdAndUpdate(req.params.id, {
 
-        grade : req.body.grade,
-        term : req.body.term,
-        subject : req.body.subject,
-        name : req.body.name,
-        marks : req.body.marks,
+
         
-    }, {new: true}).then(result => 
+        class : mongoose.Types.ObjectId(req.body.class),
+        term : req.body.term,
+        subject: req.body.subject,
+        students : mongoose.Types.ObjectId(req.body.students),
+        marks: req.body.marks
+
+        
+        
+        
+
+
+    }).then(result => 
         {
             res.status(200).json({
 
@@ -106,49 +190,37 @@ const UpdateResults = (req, res) => {
     });
 };
 
-//find result by id
-const findResultID = (req, res) =>{
-
-    Results.findById(req.params.id).then(result => 
-        {
-            res.status(200).json({
-
-                success : true,
-                data : result
 
 
+/*update student details
 
-        });
-    }).catch(err => {
-            
-        res.status(500).json({
-            success : false,
-            message : err.message
+const UpdateStudent = (req, res) => {
 
-        });
 
-        
-   
-    });
+    Class.findByIdAndUpdate(req.params.id, {
+        $push: {
+            students: mongoose.Types.ObjectId(req.body.student)
+        }
+    }, { new: true }).then(c => {
 
-};
+        Student.findByIdAndUpdate(req.body.student, {
+            enrolledIn: mongoose.Types.ObjectId(c._id)
+        }, { new: true }).then(data => res.status(200).json({ data }))
+            .catch(err => res.status(500).json({ error: err.message }));
+
+    }).catch(err => res.status(500).json({ error: err.message }));
+
+}*/
+
+
+
+
 
 
 //delete Result
 const DeleteResults = (req, res) => {
 
-  /*  if( !req.body.marks){  //body has the tasks content, if name isnt defined in body, it gives an error
-
-        return res.status(400).json({
-
-                success : false,
-                message : "mark is undefined"
-
-        });  //this checks client sde errors
-
-    }
-*/
-
+ 
 Results.findByIdAndDelete(req.params.id).then(result => 
     {
         res.status(200).json({
