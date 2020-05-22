@@ -3,6 +3,8 @@ const database = require('./util/database');
 const middleware = require('./middleware');
 const routes = require('./routes');
 
+global.appRoot = require('path').resolve(__dirname);
+
 const app = express();
 
 middleware(app);
