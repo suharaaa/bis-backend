@@ -11,5 +11,6 @@ router.put('/students/:id', studentController.updateStudent);
 router.put('/students/:id/archived', studentController.unenrollStudent);
 router.put('/students/:id/img', studentController.updateStudentImage);
 router.delete('/students/:id', studentController.deleteStudentById);
+router.post('/students/reports', studentController.generateStudentReport);
 
 module.exports = router;
