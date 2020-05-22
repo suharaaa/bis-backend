@@ -25,6 +25,8 @@ const createNewUser = (req, res) => {
             data : result
         })
     }).catch(err => {
+
+        
             
         res.status(500).json({
             success : false,
@@ -124,7 +126,7 @@ const UpdateUser = (req, res) => {
         updatedOn : new Date()
 
 
-    }, {new: true}).then(result => 
+    }).then(result => 
         {
             res.status(200).json({
 
@@ -147,16 +149,7 @@ const UpdateUser = (req, res) => {
 //delete user
 const DeleteUser = (req, res) => {
 
-    if( !req.body.fullname){  //body has the tasks content, if name isnt defined in body, it gives an error
-
-        return res.status(400).json({
-
-                success : false,
-                message : "Full name is undefined"
-
-        });  //this checks client sde errors
-
-    }
+   
 
 
     Users.findByIdAndDelete(req.params.id).then(result => 
