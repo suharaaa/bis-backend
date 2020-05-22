@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const createNewResult = (req, res) => {
 
    
-    if( !req.body.marks){  //body has the tasks content, if name isnt defined in body, it gives an error
+    if( !req.body.marks){  //body has the tasks content, if marks arent defined in body, it gives an error
 
         return res.status(400).json({
 
@@ -23,7 +23,6 @@ const createNewResult = (req, res) => {
 
 
 
-     //save to db
      result.save()
          .then(s => {
              Results.findByIdAndUpdate(req.body.class, {
@@ -49,8 +48,8 @@ const createNewResult = (req, res) => {
          });
  };
 
-//to retrieve the results that are created
 
+//to retrieve the results that are created
 const viewResults = (req, res) => {
 
 Results.find({}).populate('students').populate('class')
@@ -99,52 +98,9 @@ const findResultID = (req, res) =>{
 };
 
 
-
-/*const UpdateResults = (req, res) => {
-
-    if( !req.body.name){  //body has the tasks content, if name isnt defined in body, it gives an error
-
-        return res.status(400).json({
-
-                success : false,
-                message : "Result is undefined"
-
-        });  //this checks client sde errors
-
-    }
-
-
-    Results.findByIdAndUpdate(req.params.id, {
-
-        class : mongoose.Types.ObjectId(req.body.class),
-        term : req.body.term,
-        subject : req.body.subject,
-        students: mongoose.Types.ObjectId(req.body.students),
-        marks : req.body.marks
-        
-
-    }).then(result => 
-        {
-            res.status(200).json({
-
-                success : true,
-                data : result
-
-        });
-    }).catch(err => {
-            
-        res.status(500).json({
-            success : false,
-            message : err.message
-
-        });    
-   
-    });
-};*/
-
 const UpdateResults= (req, res) => {
 
-    if( !req.body.marks){  //body has the tasks content, if name isnt defined in body, it gives an error
+    if( !req.body.marks){  //body has the tasks content, if marks arent defined in body, it gives an error
 
         return res.status(400).json({
 
@@ -157,18 +113,12 @@ const UpdateResults= (req, res) => {
 
 
     Results.findByIdAndUpdate(req.params.id, {
-
-
         
         class : mongoose.Types.ObjectId(req.body.class),
         term : req.body.term,
         subject: req.body.subject,
         students : mongoose.Types.ObjectId(req.body.students),
         marks: req.body.marks
-
-        
-        
-        
 
 
     }).then(result => 
@@ -189,32 +139,6 @@ const UpdateResults= (req, res) => {
    
     });
 };
-
-
-
-/*update student details
-
-const UpdateStudent = (req, res) => {
-
-
-    Class.findByIdAndUpdate(req.params.id, {
-        $push: {
-            students: mongoose.Types.ObjectId(req.body.student)
-        }
-    }, { new: true }).then(c => {
-
-        Student.findByIdAndUpdate(req.body.student, {
-            enrolledIn: mongoose.Types.ObjectId(c._id)
-        }, { new: true }).then(data => res.status(200).json({ data }))
-            .catch(err => res.status(500).json({ error: err.message }));
-
-    }).catch(err => res.status(500).json({ error: err.message }));
-
-}*/
-
-
-
-
 
 
 //delete Result
