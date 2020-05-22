@@ -1,0 +1,48 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+        
+        table, th, td {
+            border: none;
+        }
+
+        table, th, tr, td {
+            margin-bottom: 10px;
+        }
+        </style>
+    </head>
+    <body>
+        <div style="width: 85%; height: 100%; padding-right: 20px; padding-left: 40px;">
+            <div style="text-align: center;">
+                <img width="100" src="https://brightinternational.herokuapp.com/uploads/logo.jpg">  
+                <h2>Bright International School</h2>
+                <h3>Student Information</h3>
+                <% if (students.length > 0) { %>
+                    <% students.forEach(student => {%>
+                        <hr>
+                       <table style="width: 100%; border: none; text-align: left; font-size: 12px;">
+                        <tr style="margin-bottom: 10px;"><td><img width="100" src="<%= student.img%>"></td><td></td><td></td><td></td></tr>
+                        <tr style="margin-bottom: 10px;"><td>Admission Number: </td><td><%= student.admissionNumber %></td><td></td><td></td></tr>
+                        <tr style="margin-bottom: 10px;"><td>Student Name: </td><td><%= student.fname %> <%= student.lname %></td><td>Email: </td><td><%= student.mail %></td></tr>
+                        <tr><td>Address: </td><td><%= student.address %></td><td>Gender: </td><td><%= student.gender %></td></tr>
+                        <tr><td>Date of Birth: </td><td><%= new Date(student.dob).getDate() %>/<%= new Date(student.dob).getMonth() + 1 %>/<%= new Date(student.dob).getFullYear() %> </td><td>Nationality: </td><td><%= student.nation %></td></tr>
+                        <tr><td>Religion: </td><td><%= student.religion %></td><td>Class: </td><td><%= student.class.name %></td></tr>
+                        <br>
+                        <tr><td>Mother's Information</td></tr>
+                        <tr><td>Name: </td><td><%= student.mname %></td><td>Occupation: </td><td><%= student.moccupation %></td></tr>
+                        <tr><td>Work Place: </td><td><%= student.mworkp %></td><td>Address: </td><td><%= student.maddress %></td></tr>
+                        <tr><td>Phone: </td><td><%= student.mphone %></td><td>Email: </td><td><%= student.memail %></td></tr>
+
+                        <tr><td>Father's Information</td></tr>
+                        <tr><td>Name: </td><td><%= student.faname %></td><td>Occupation: </td><td><%= student.foccupation %></td></tr>
+                        <tr><td>Work Place: </td><td><%= student.fworkp %></td><td>Address: </td><td><%= student.faddress %></td></tr>
+                        <tr><td>Phone: </td><td><%= student.fphone %></td><td>Email: </td><td><%= student.femail %></td></tr>
+                       </table>
+                    <%  });%>
+                <% }%>
+             </div>
+        </div>
+    </body>
+</html>

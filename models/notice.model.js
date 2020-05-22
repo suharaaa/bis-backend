@@ -6,8 +6,7 @@ const noticeSchema = new mongoose.Schema({
     teachersOnly: { type: Boolean, default: false},
     publishedOn: { type: Date, default: new Date()},
     updatedOn: { type: Date, default: new Date()},
-    expiresOn: { type: Date, default: new Date()},
-    noOfViewers: {type: Number, default: 0}
+    expiresOn: { type: Date, default: new Date()}
 });
 
 module.exports = mongoose.model('notice', noticeSchema); //collection name & structure

@@ -1,8 +1,8 @@
 const Student = require("../models/student.model");
 const mongoose = require("mongoose");
 const Classes = require("../models/class.model");
-// const multer = require("multer");
-// const upload = multer({ dest: "uploads/" });
+let ejs = require("ejs");
+let pdf = require("html-pdf");
 
 const enrollStudent = (req, res) => {
   if (!req.body.fname) {
@@ -61,13 +61,23 @@ const enrollStudent = (req, res) => {
 };
 
 //get all students
-const viewStudents = (req, res) => {
-  Student.find({ archive: false })
+const viewStudents = async (req, res) => {
+  const page = parseInt(req.query.page);
+  const limit = parseInt(req.query.limit);
+
+  const results = {};
+
+  const count = await Student.count();
+
+  results.results = Student.find({ archive: false })
     .populate("class")
+    .skip(page * limit)
+    .limit(limit)
     .then((result) => {
       res.status(200).json({
         success: true,
         data: result,
+        count
       });
     })
     .catch((err) => {
@@ -161,6 +171,7 @@ const updateStudent = (req, res) => {
       faddress: req.body.maddress,
       fphone: req.body.fphone,
       femail: req.body.femail,
+      img: req.body.img
     },
     { new: true }
   )
@@ -323,6 +334,57 @@ const updateStudentImage = (req, res) => {
     });
 };
 
+const generateStudentReport = async (req, res) => {
+  const {students} = req.body;
+  if (!students) {
+    return res.status(400).json({
+      success: false, error: '\'students\' is required'
+    });
+  }
+
+  const data = await Student.find({
+    _id: {
+      $in: students
+    }
+  }).populate('class');
+
+  ejs.renderFile(
+    global.appRoot + '/util/templates/student-report.ejs', 
+    { students: data }, (err, data) => {
+      if (err) {
+        return res.status(500).json({
+          success: false, error: err.message
+        });
+      }
+
+      let options = {
+        "height": "11.25in",
+        "width": "8.5in",
+        "header": {
+            "height": "20mm"
+        },
+        "footer": {
+            "height": "20mm",
+        },
+      };
+      
+      pdf.create(data, options).toFile("./uploads/student-report.pdf", function (err, data) {
+        if (err) {
+          return res.status(500).json({
+            success: false, error: err.message
+          });
+        } else {
+            res.status(200).json({
+              success: true, data: {
+                filename: process.env.API_HOST + '/uploads/student-report.pdf'
+              }
+            });
+        }
+    });
+  })
+
+}
+
 module.exports = {
   enrollStudent,
   viewStudents,
@@ -333,4 +395,5 @@ module.exports = {
   deleteStudentById,
   getNextAdmissionNumber,
   updateStudentImage,
+  generateStudentReport
 };
