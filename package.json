@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start-server": "node index.js",
-    "start": "nodemon index.js"
+    "start": "API_HOST=https://brightinternational.herokuapp.com node index.js",
+    "dev": "API_HOST=http://localhost:3000 nodemon index.js"
   },
   "repository": {
     "type": "git",

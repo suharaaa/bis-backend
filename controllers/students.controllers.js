@@ -376,7 +376,7 @@ const generateStudentReport = async (req, res) => {
         } else {
             res.status(200).json({
               success: true, data: {
-                filename: 'http://localhost:3000/uploads/student-report.pdf'
+                filename: process.env.API_HOST + '/uploads/student-report.pdf'
               }
             });
         }
