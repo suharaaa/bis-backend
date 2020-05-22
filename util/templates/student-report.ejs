@@ -3,24 +3,22 @@
 <html>
     <head>
         <style>
-        table {
-            border-collapse: collapse;
-        }
+        
         table, th, td {
             border: none;
         }
 
-        td {
+        table, th, tr, td {
             margin-bottom: 10px;
         }
         </style>
     </head>
     <body>
-        <div style="width: 100%; height: 100%; padding-right: 20px; padding-left: 40px;">
+        <div style="width: 85%; height: 100%; padding-right: 20px; padding-left: 40px;">
             <div style="text-align: center;">
-                <img src="/util/templates/logo.jpg">  
+                <img width="100" src="http://localhost:3000/uploads/logo.jpg">  
                 <h2>Bright International School</h2>
-                <h3>Student Report</h3>
+                <h3>Student Information</h3>
                 <% if (students.length > 0) { %>
                     <% students.forEach(student => {%>
                         <hr>
@@ -38,7 +36,7 @@
                         <tr><td>Phone: </td><td><%= student.mphone %></td><td>Email: </td><td><%= student.memail %></td></tr>
 
                         <tr><td>Father's Information</td></tr>
-                        <tr><td>Name: </td><td><%= student.fname %></td><td>Occupation: </td><td><%= student.foccupation %></td></tr>
+                        <tr><td>Name: </td><td><%= student.faname %></td><td>Occupation: </td><td><%= student.foccupation %></td></tr>
                         <tr><td>Work Place: </td><td><%= student.fworkp %></td><td>Address: </td><td><%= student.faddress %></td></tr>
                         <tr><td>Phone: </td><td><%= student.fphone %></td><td>Email: </td><td><%= student.femail %></td></tr>
                        </table>
