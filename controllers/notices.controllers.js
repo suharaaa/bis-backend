@@ -38,48 +38,6 @@ const createNotice = (req, res) => {
     });
 };
 
-const viewNotices = (req, res) => {
-    Notice.find({}).then(result => {
-        res.status(200).json({
-            success: true,
-            data: result
-        });
-    }).catch(err => {
-        res.status(501).json({
-            success: false,
-            message: err.message
-        });
-    });
-};
-
-const viewPublicNotices = (req, res) => {
-    Notice.find({teachersOnly:false}).then(result => {
-        res.status(200).json({
-            success: true,
-            data: result
-        });
-    }).catch(err => {
-        res.status(501).json({
-            success: false,
-            message: err.message
-        });
-    });
-};
-
-const viewNoticeById = (req, res) => {
-    Notice.findById(req.params.id).then(result => {
-        res.status(200).json({
-            success: true,
-            data: result
-        });
-    }).catch(err => {
-        res.status(502).json({
-            success: false,
-            message: err.message
-        });
-    });
-};
-
 const updateNoticeById = (req, res) => {
 
     if(!req.body.title) {
@@ -116,6 +74,48 @@ const updateNoticeById = (req, res) => {
         });
     }).catch(err => {
         res.status(503).json({
+            success: false,
+            message: err.message
+        });
+    });
+};
+
+const viewNotices = (req, res) => {
+    Notice.find({}).then(result => {
+        res.status(200).json({
+            success: true,
+            data: result
+        });
+    }).catch(err => {
+        res.status(501).json({
+            success: false,
+            message: err.message
+        });
+    });
+};
+
+const viewPublicNotices = (req, res) => {
+    Notice.find({teachersOnly:false}).then(result => {
+        res.status(200).json({
+            success: true,
+            data: result
+        });
+    }).catch(err => {
+        res.status(501).json({
+            success: false,
+            message: err.message
+        });
+    });
+};
+
+const viewNoticeById = (req, res) => {
+    Notice.findById(req.params.id).then(result => {
+        res.status(200).json({
+            success: true,
+            data: result
+        });
+    }).catch(err => {
+        res.status(502).json({
             success: false,
             message: err.message
         });
