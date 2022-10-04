@@ -39,7 +39,49 @@ const createNewUser = (req, res) => {
 
 }
 
+//update users
+const UpdateUser = (req, res) => {
 
+    if( !req.body.fullname){  //body has the tasks content, if name isnt defined in body, it gives an error
+
+        return res.status(400).json({
+
+                success : false,
+                message : "Full name is undefined"
+
+        });  //this checks client sde errors
+
+    }
+
+
+    Users.findByIdAndUpdate(req.params.id, {
+
+        fullname: req.body.fullname,
+        email : req.body.email,
+        grade : req.body.grade,
+        password : req.body.password,
+        reenter : req.body.reenter,
+        updatedOn : new Date()
+
+
+    }).then(result => 
+        {
+            res.status(200).json({
+
+                success : true,
+                data : result
+
+        });
+    }).catch(err => {
+            
+        res.status(500).json({
+            success : false,
+            message : err.message
+
+        });    
+   
+    });
+};
 
 
 //to retrieve the users that are created
@@ -97,54 +139,6 @@ const findUserID = (req, res) =>{
     });
 
 };
-
-
-
-
-//update users
-const UpdateUser = (req, res) => {
-
-    if( !req.body.fullname){  //body has the tasks content, if name isnt defined in body, it gives an error
-
-        return res.status(400).json({
-
-                success : false,
-                message : "Full name is undefined"
-
-        });  //this checks client sde errors
-
-    }
-
-
-    Users.findByIdAndUpdate(req.params.id, {
-
-        fullname: req.body.fullname,
-        email : req.body.email,
-        grade : req.body.grade,
-        password : req.body.password,
-        reenter : req.body.reenter,
-        updatedOn : new Date()
-
-
-    }).then(result => 
-        {
-            res.status(200).json({
-
-                success : true,
-                data : result
-
-        });
-    }).catch(err => {
-            
-        res.status(500).json({
-            success : false,
-            message : err.message
-
-        });    
-   
-    });
-};
-
 
 //delete user
 const DeleteUser = (req, res) => {
