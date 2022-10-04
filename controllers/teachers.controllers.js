@@ -35,30 +35,6 @@ const addTeacher = (req, res) => {
     });
 };
 
-//getting teacher list
-const viewTeacher = (req, res) =>{
-
-    Teacher.find({history: false}).then(result => 
-        {
-            res.status(200).json({
-
-                success : true,
-                data : result   
-            });
-        }).catch(err => {
-            
-            res.status(500).json({
-
-                success : false,
-                message : err.message
-
-            }); 
-   
-        });
-
-};
-
-
 // updataing
 const updateTeacher = (req, res) => {
 
@@ -105,6 +81,30 @@ const updateTeacher = (req, res) => {
             message: err.message
         });
     });
+
+};
+
+
+//getting teacher list
+const viewTeacher = (req, res) =>{
+
+    Teacher.find({history: false}).then(result => 
+        {
+            res.status(200).json({
+
+                success : true,
+                data : result   
+            });
+        }).catch(err => {
+            
+            res.status(500).json({
+
+                success : false,
+                message : err.message
+
+            }); 
+   
+        });
 
 };
 
